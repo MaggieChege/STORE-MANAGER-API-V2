@@ -9,6 +9,7 @@ users = '''CREATE TABLE IF NOT EXISTS users(
 products = '''CREATE TABLE IF NOT EXISTS products(
 		product_id serial PRIMARY KEY,
 		product_name varchar(50) NOT NULL,
+		category varchar(50) NOT NULL,
 		price varchar(10) NOT NULL,
 		quantity varchar(10) NOT NULL);'''
 
