@@ -25,6 +25,26 @@ def create_tables():
 	finally:
 		cur.close()
 		con.commit()
-		
 
+def drop_tables():
+	try:
+		con=Database_Connection()
+		cur= con.cursor()
+		for drop in drop_queries:
+			cur.execute(drop)
+		con.commit()
+		print("Tables Deleted")
+	except Exception as e:
+		print(e)
+
+
+
+
+
+	# def save_details(tables):
+# 	con = Database_Connection()
+# 	cur= con.cursor()
+# 	cur.execute(tables)
+# 	cur.close()
+# 	con.commit()
     
