@@ -53,4 +53,28 @@ class Products(Resource):
             products.append(product)
             return make_response(jsonify({'product':product}),201)
         except Exception as a:
-            return {a}
+            return {"message":a}
+
+
+    def delete(self,product_id):
+        '''delete product by id'''
+        
+        product=[product for product in products if product['product_id']==product_id]
+        if not product:
+            return make_response(jsonify({"message":"Product not found"}),200)
+        else:
+            con =Database_Connection()
+            cur=con.cursor()
+            query = "DELETE FROM products where product_id=%s;"
+            cur.execute(query,(product_id))
+            database.commit()
+            return{"message":"Deleted successfully"}
+
+class Get_product_id(Resource):
+    
+    def get(self,product_id):
+        pro = [product for product in products if product['product_id'] == product_id] or None
+        if pro:
+            return jsonify({'product':pro[0]})
+        else:
+            return jsonify({'message': "specific product not found"})

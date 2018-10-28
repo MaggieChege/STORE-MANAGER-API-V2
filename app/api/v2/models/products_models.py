@@ -11,21 +11,12 @@ class Product():
         self.category=category
         self.price=price
         self.quantity=quantity
-        # self.db = Database_Connection()
     def get_product(self):
-        # con =self.Database_Connection()
-        # cur=con.cursor()
-        # query= '''SELECT * FROM products;'''
-        # cursor.execute(query)
-        # data =cur.fetchall()
         return products
 
     def create_product(self):
         product_id=len(products)+1
         product={"product_id":self.product_id,"product_name":self.product_name,"category":self.category,"price":self.price,"quantity":self.quantity}
-        # query = '''INSERT INTO products(
-        # product_id,product_name,category, price, quantity)
-        # VALUES('{}', '{}', '{}','{}', '{}', '{}');
-        # '''.format(product_id,product_name,category,price,quantity)
+        # product_id,product_name,category,price,quantity)
         return product
     
