@@ -16,11 +16,11 @@ products = '''CREATE TABLE IF NOT EXISTS products(
 sales = '''CREATE TABLE IF NOT EXISTS sales(
 		sale_id serial PRIMARY KEY,
 		product_id varchar(10) 	NOT NULL,
-		product_name varchar(10) NOT NULL,
+		product_name varchar(50) NOT NULL,
 		price varchar(10) NOT NULL,
 		total_sale varchar(10) NOT NULL,
 		attendant varchar(10) NOT NULL,
-		quntity varchar(10) NOT NULL);'''
+		quantity varchar(10) NOT NULL);'''
 drop_users="DROP TABLE IF EXISTS users CASCADE"
 drop_products="DROP TABLE IF EXISTS products CASCADE"
 drop_sales = "DROP TABLE IF EXISTS sales CASCADE"
