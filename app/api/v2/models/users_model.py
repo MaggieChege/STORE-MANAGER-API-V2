@@ -13,6 +13,26 @@ class Users:
         self.email=email
         self.password=password
         self.role=role
+
+    def get_users(self):
+        query="SELECT * FROM users"
+        con=Database_Connection()
+        cur= con.cursor()
+        cur.execute(query)
+        db_users= cur.fetchall()
+        if db_users:
+            users = []
+            for items in db_users:
+                item ={
+                'id':items[0],
+                'username':items[1],
+                'email':items[2],
+                'password':items[3],
+                'role':items[4]
+                }
+                users.append(item)
+            return users
+
     def create_user(self):
         user = {"username":self.username,"email":self.email,"password":self.password,"role":self.role}
         try:
@@ -33,8 +53,20 @@ class Users:
     def verify_hash(hash_password,password):
         return check_password_hash(hash_password,password)
 
+    @staticmethod
+    def fetch_by_role(email):
+        "Fetch a user through email"
+        con =Database_Connection()
+        cur=con.cursor()
+        cur.execute("SELECT * FROM users WHERE email =%s", (email,))
+        selected_user = cur.fetchone()
+        
+        return selected_user[4]
+        # role_user = selected_user[4]
 
-    def fetch_by_email(email):
+        
+    @staticmethod
+    def fetch_by_email(role):
         "Fetch a user through email"
         con =Database_Connection()
         cur=con.cursor()
@@ -44,11 +76,3 @@ class Users:
         return selected_user[2]
 
 
-    # @jwt.user_claims_loader
-    def add_claims_to_access_token(user):
-        return {'roles': user.role}
-
-    # @jwt.user_identity_loader
-    def user_identity_lookup(user):
-        return user.email
-      

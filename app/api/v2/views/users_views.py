@@ -8,18 +8,24 @@ import re
 from functools import wraps
 
 
-# class admin_only(f): 
-#     @wraps(f)
-#     def decorator_func(*args,**kwargs):
-#         user = Users().fetch_by_email(get_jwt_identity())["email"]
-#         if not user.is_admin:
-#             return{"message":"Unauthorized access"},401
-#         return f(*args,**kwargs)
-#         return decorator_func
 
+def admin_only(f): 
+    @wraps(f)
+    def decorator_func(*args,**kwargs):
+        user = Users.fetch_by_role(get_jwt_identity())
+        print(user)
+
+        if not user ==  "Admin":
+            return{"message":"Unauthorized access"},403
+        else:
+            return f(*args,**kwargs)
+
+    return decorator_func
 
        
 class UserRegistration(Resource):
+    # @jwt_required
+    # @admin_only
     def post(self):
 
         data = request.get_json()
@@ -28,27 +34,37 @@ class UserRegistration(Resource):
         role = data['role']
         raw_password = data['password']
         if not email or email =="":
+            return {message:"Enter an email"}
+        if not username or username =="":
+            return {message:"Enter an email"}
+            
+        if not role or role =="":
+            return {message:"Enter an email"}
+
+
             return make_response(jsonify({"message":"email cannot be empty"}))
         if not re.match(r"[^@]+@[^@]+\.[^@]+",email):
             return {"message": "Enter correct email format"}
                     # generate hash value for rawpassword
 
-        check_email=Users.fetch_by_email(email)
-        if check_email:
-            return {"message": "email already exists"}
+        users =Users.get_users(self)
+        if users:
+            user_email = [user for user in users if user["email"] == email]
+            if user_email:
+                return {"message": "Email exists"}
 
         password = Users.generate_hash(raw_password)
        
         user = Users(username,email,password,role).create_user()
         
+        response =jsonify({
 
-        return {
-
-        "Users" : user,
             'message': 'User was created succesfully',
             'status': 'ok',
             
-            }, 201
+            })
+        response.status_code = 201
+        return response
 
 
 

@@ -1,6 +1,8 @@
 import psycopg2
-# from instance.config import app_configuration
+import os
+from instance.config import app_configuration
 from app.queries import queries
+# enviroment =os.environ['ENVIRONMENT']
 
 url = "dbname='store' host='localhost' port='5432' user='postgres' password='root'"
 def Database_Connection():
@@ -8,7 +10,9 @@ def Database_Connection():
 		
 		con = psycopg2.connect(url)
 		cur =con.cursor()
+		# conn = psycopg2.connect(app_configuration[enviroment].connectionVariables)
 		return con
+		# return conn
 
 	except(Exception, psycopg2.DatabaseError) as error:
 		print("Failed to connect", error)
@@ -34,10 +38,13 @@ def drop_tables():
 		cur= con.cursor()
 		for drop in drop_queries:
 			cur.execute(drop)
-		con.commit()
+		
 		print("Tables Deleted")
 	except Exception as e:
 		print(e)
+		con.commit()
+		cur.close()
+		con.close
 
 
 

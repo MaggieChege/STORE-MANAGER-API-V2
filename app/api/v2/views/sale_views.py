@@ -1,60 +1,70 @@
+from datetime import datetime
 from flask import request, jsonify, make_response
 from flask_restful import Resource
 from app.dbconn import Database_Connection
 from app.api.v2.models.sale_models import Sale
 from app.api.v2.views.products_views import Product
+from app.api.v2.views.users_views import admin_only
+from app.api.v2.models.users_model import Users
+from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
+
+from functools import wraps
 
 
 class Sales(Resource):
     def get(self):
-        con =Database_Connection()
-        cur=con.cursor()
-        query = "SELECT * FROM sales;"
-        cur.execute(query)
-        data = cur.fetchall()
-        
-        for k,v in enumerate(data):
-            sale_id,product_id,product_name,price,attendant,total_sale,quantity=v
-            sal = {"sale_id": sale_id,
-            "product_id":product_id,
-            "product_name" : product_name,
-            "price" : price,
-            "attendant" : attendant,
-            "total_sale" :total_sale,
-            "quantity": quantity}
-            sales.append(sal)
-            if not sal:
-                return make_response(jsonify({"message": "No sale record found"}))
-            return make_response(jsonify({"sales":sales}),201)
-    # @jwt_required
+        sales = Sale.get_sales(self)
+        if not sales:
+            return make_response(jsonify({"message": "No sale record found"}))
+        return make_response(jsonify({"sales":sales}),201)
+
+    
     def post(self):
-        sale_id = len(sales)+1
-        product_id = request.json.get('product_id')
-        product_name = request.json.get('product_name')
-        price = request.json.get('price')
-        total_sale= request.json.get('total_sale')
-        attendant = request.json.get("attendant")
-        quantity = request.json.get('quantity')
-        if not product_name or product_name == "":
-            return 404
+        data =request.get_json()
+        # sale_id = data['sale_id']
+        product_id  = data['products_id ']
+        quantity = data['quantity']
+        attendant=data['attendant']
+
+       
+
+        product=Sale.get_product_by_id(product_id)
+        print(product)
         
 
-        con =Database_Connection()
-        cur=con.cursor()
-        con.commit()
-        query = "INSERT INTO sales(sale_id,product_id,product_name,price,attendant,total_sale,quantity) VALUES (%s,%s,%s,%s,%s,%s,%s);"
-        cur.execute(query,(sale_id,product_id,product_name,price,attendant,total_sale,quantity))
-        con.commit()
+        if product is None:
+            return {"message":"Product is not available"},404
 
-        product = [product for product in products if product ["product_name"] == product_name]
-        if not product:
-            return {"message": "Product does not exist"}
+        price = product[3]
+        remaining_quantity=int(product[4]) - int(quantity)
+        total_sale = int(product[3]) * int(quantity)
+        name = product[1]
+        date_created = datetime.now()
 
-        sale = Sale(sale_id,product_id,product_name,price,attendant,total_sale,quantity).create_sale()
-        if quantity > product[0]["quantity"]:
-            return {"message": "Out of stock"}
-        product[0]["quantity"] = product[0]["quantity"] - quantity
-        return make_response(jsonify({'sale':sale}),201)
+
+        if remaining_quantity < 0:
+            return {"message": "Not enough in stock"}
+
+        newsale = Sale(product_id,quantity,remaining_quantity,price,name,attendant,date_created).create_sale()
+        print(newsale)
+        Sale.decrease_quantity(product_id,product)
+        # newsale.create_sale()
+        
+
+        return make_response(jsonify(
+            {"message":"Sale record created successfully"}
+            ), 201)
+        # "status":"created",
+        #     "product":newsale 
+    
+
+
+class DeleteSale(Resource):
+    def delete(self,sale_id):
+        Sale.delete_product(sale_id)
+        return {"message":"Deleted successfully"}
+    
+
 class Get_sale_id(Resource):
     def get(self,sale_id):
         sal = [sale for sale in sales if sale['sale_id'] == sale_id] or None
