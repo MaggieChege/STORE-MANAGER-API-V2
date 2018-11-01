@@ -14,8 +14,7 @@ products = '''CREATE TABLE IF NOT EXISTS products(
 		quantity varchar(50) NOT NULL);'''
 
 sales = '''CREATE TABLE IF NOT EXISTS sales(
-		id serial PRIMARY KEY,
-        product_id INT NOT NULL,
+		product_id INT NOT NULL,
         quantity INT NOT NULL,
         remaining_quantity INT NOT NULL,
         price INT NOT NULL,

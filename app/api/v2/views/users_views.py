@@ -6,6 +6,8 @@ from passlib.hash import pbkdf2_sha256 as sha256
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 import re
 from functools import wraps
+from app.api.v2.utils.schemas import user_schema
+from flask_expects_json import expects_json
 
 
 
@@ -16,7 +18,7 @@ def admin_only(f):
         print(user)
 
         if not user ==  "Admin":
-            return{"message":"Unauthorized access"},403
+            return{"message":"You must be logged in as Admin to add a product"},403
         else:
             return f(*args,**kwargs)
 
@@ -26,6 +28,7 @@ def admin_only(f):
 class UserRegistration(Resource):
     # @jwt_required
     # @admin_only
+    @expects_json(user_schema)
     def post(self):
 
         data = request.get_json()

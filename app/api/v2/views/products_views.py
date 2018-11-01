@@ -5,7 +5,8 @@ from app.api.v2.models.products_models import Product,products
 from app.api.v2.models.users_model import Users
 from app.api.v2.views.users_views import *
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
-
+from app.api.v2.utils.schemas import products_schema
+from flask_expects_json import expects_json
 class Products(Resource):
 
     def get(self):
@@ -18,12 +19,13 @@ class Products(Resource):
     
     @jwt_required
     @admin_only
+    @expects_json(products_schema)
     def post(self):
         user = Users.fetch_by_role(get_jwt_identity())
         print(user)
 
         if not user ==  "Admin":
-            return{"message":"Unauthorized access"},403
+            return{"message":"You must be lo"},403
 
 
 
@@ -69,6 +71,7 @@ class DeleteProd(Resource):
 class Products_update(Resource):
     @jwt_required
     @admin_only
+    @expects_json(products_schema)
     def put(self,product_id):
         data = request.get_json()
         # prod_id = data["product_id"]

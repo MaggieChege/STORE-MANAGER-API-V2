@@ -26,6 +26,7 @@ class Sale():
         except Exception as e:
             print(e)
         return sale
+        
     def get_sales(self):
         query="SELECT * FROM sales"
         con=Database_Connection()
@@ -57,8 +58,8 @@ class Sale():
             return None
         con.commit()
         return product
-    def decrease_quantity(product_id, product):
+    def decrease_quantity(product_id, remaining_quantity):
         con=Database_Connection()
         cur= con.cursor()
-        cur.execute("UPDATE products SET quantity = %s WHERE product_id = %s", (product[4],product_id))
+        cur.execute("UPDATE products SET quantity = %s WHERE product_id = %s", (remaining_quantity,product_id))
         con.commit()

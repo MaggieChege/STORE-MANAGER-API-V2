@@ -7,7 +7,8 @@ from app.api.v2.views.products_views import Product
 from app.api.v2.views.users_views import admin_only
 from app.api.v2.models.users_model import Users
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
-
+from app.api.v2.utils.schemas import sales_schema
+from flask_expects_json import expects_json
 from functools import wraps
 
 
@@ -18,7 +19,7 @@ class Sales(Resource):
             return make_response(jsonify({"message": "No sale record found"}))
         return make_response(jsonify({"sales":sales}),201)
 
-    
+    @expects_json(sales_schema)
     def post(self):
         data =request.get_json()
         # sale_id = data['sale_id']
@@ -47,8 +48,7 @@ class Sales(Resource):
 
         newsale = Sale(product_id,quantity,remaining_quantity,price,name,attendant,date_created).create_sale()
         print(newsale)
-        Sale.decrease_quantity(product_id,product)
-        # newsale.create_sale()
+        Sale.decrease_quantity(product_id,remaining_quantity)
         
 
         return make_response(jsonify(
@@ -72,6 +72,4 @@ class Get_sale_id(Resource):
             return make_response(jsonify({'sale':sal[0]}),200)
         else:
             return jsonify({'message': "specific sale not found"})
-            
-
-        return 404
+            return 404
