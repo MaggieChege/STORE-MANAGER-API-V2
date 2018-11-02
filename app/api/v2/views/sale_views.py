@@ -33,7 +33,6 @@ class Sales(Resource):
             return {"message": "No product found"},404
 
 
-        price = product[1]
         remaining_quantity=int(product[4]) - int(quantity)
         total_sale = int(product[3]) * int(quantity)
         price = product[3]

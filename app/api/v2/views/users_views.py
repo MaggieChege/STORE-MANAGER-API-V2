@@ -14,8 +14,6 @@ def admin_only(f):
     @wraps(f)
     def decorator_func(*args,**kwargs):
         user = Users.fetch_by_role(get_jwt_identity())
-        print(user)
-
         if not user ==  "Admin":
             return{"message":"You must be logged in as Admin to add a product"},403
         else:
