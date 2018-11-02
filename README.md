@@ -1,3 +1,7 @@
+
+[![Build Status](https://travis-ci.org/MaggieChege/STORE-MANAGER-API-V2.svg?branch=develop)](https://travis-ci.org/MaggieChege/STORE-MANAGER-API-V2)
+
+
 # STORE-MANAGER-API-V2
 This is Version 2 of Store Manager application. This web application stores enables the admin or attendant to make a sale and to add products that they would like to sell in their store.
 
