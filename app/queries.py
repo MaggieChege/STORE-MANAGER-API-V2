@@ -5,7 +5,6 @@ users = '''CREATE TABLE IF NOT EXISTS users(
 		password varchar(100) NOT NULL,
 		role varchar(50));'''
 
-regiter_admin = """INSERT INTO users (username, email, password, role) VALUES('nicanor','nicanor@gmail.com','12345','Admin');"""
 
 
 products = '''CREATE TABLE IF NOT EXISTS products(
@@ -21,7 +20,7 @@ sales = '''CREATE TABLE IF NOT EXISTS sales(
         quantity INT NOT NULL,
         remaining_quantity INT NOT NULL,
         price INT NOT NULL,
-        name varchar(50),
+        product_name varchar(50),
         attendant varchar(50),
         date_created TIMESTAMP,  
         FOREIGN KEY (product_id) REFERENCES products(product_id)

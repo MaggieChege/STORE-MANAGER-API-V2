@@ -22,30 +22,29 @@ class Sales(Resource):
     def post(self):
         data =request.get_json()
         # sale_id = data['sale_id']
-        product_id= data['product_id']
+        product_name= data['product_name']
         quantity = data['quantity']
         attendant=data['attendant']
 
        
 
-        product=Sale.get_product_by_id(product_id)
-        print(product)
-        
+        product=Product.get_product_name(product_name)
+        if not product:
+            return {"message": "No product found"},404
 
-        if product is None:
-            return {"message":"Product is not available"},404
 
-        price = product[3]
+        price = product[1]
         remaining_quantity=int(product[4]) - int(quantity)
         total_sale = int(product[3]) * int(quantity)
-        name = product[1]
+        price = product[3]
         date_created = datetime.now()
+        product_id = product[0]
 
 
         if remaining_quantity < 0:
             return {"message": "Not enough in stock"}
 
-        newsale = Sale(product_id,quantity,remaining_quantity,price,name,attendant,date_created).create_sale()
+        newsale = Sale(product_id,quantity,remaining_quantity,price,product_name,attendant,date_created).create_sale()
         print(newsale)
         Sale.decrease_quantity(product_id,remaining_quantity)
         
