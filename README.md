@@ -41,31 +41,31 @@ https://www.pivotaltracker.com/n/projects/2209137
 
 The follwing endoints should work
 
-``` 1. POST /api/v2/auth/user
-```
-
-```2. POST /api/v2/users/login
-```
-
-```3. GET /api/v2/products
-```
-
-```4.GET /api/v2/sales
-```
-
-```5. GET /api/v2/<Product_id>
-```
-
-```6.GET /sales/<saleId>
-```
+``` 1. POST /api/v2/auth/user ```
 
 
-```7.POST /products
-```
+``` 2. POST /api/v2/users/login ```
 
 
-```8.POST /sales
-```
+``` 3. GET /api/v2/products ```
+
+
+``` 4.GET /api/v2/sales ```
+
+
+``` 5. GET /api/v2/<Product_id> ```
+
+
+``` 6.GET /sales/<saleId> ```
+
+
+
+``` 7.POST /products ```
+
+
+
+``` 8.POST /sales ```
+
 
 #RUN TESTS
 
