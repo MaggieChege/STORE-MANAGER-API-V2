@@ -60,11 +60,10 @@ class DeleteSale(Resource):
 
 
 class Get_sale_id(Resource):
-    def get(self,sale_id):
-        
-        sal = [sale for sale in sales if sale['sale_id'] == sale_id] or None
-        if sal:
-            return make_response(jsonify({'sale':sal[0]}),200)
+    def get(self,product_id):
+        single_product = Sale.get_sale_by_id(product_id)
+        if not single_product:
+            return make_response(jsonify({"message":"Product Does not exist"}),200)
         else:
-            return jsonify({'message': "specific sale not found"})
-            return 404
+            return jsonify(single_product)
+

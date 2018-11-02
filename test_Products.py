@@ -17,7 +17,7 @@ class UserTestCase(unittest.TestCase):
         self.login_user = {"email": "higi@gmail.com", "password":"12345"}
         self.test_product= {
             "category": "Men",
-            "price": "5500",
+            "price": 5500,
             "product_id": 3,
             "product_name": "Nikes Old School ",
             "quantity": "2"
@@ -48,8 +48,8 @@ class UserTestCase(unittest.TestCase):
         headers=dict(Authorization="Bearer " + token),
         content_type = 'application/json')
         response_data = json.loads(response.data)
-        self.assertEqual(response_data["message"],"Product Successful Added")
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response_data["message"],'Product exists')
+        self.assertEqual(response.status_code, 200)
 
     def test_empty_product(self):
         response = self.client.post(

@@ -7,7 +7,9 @@ from app.queries import queries
 def Database_Connection():
 	try:
 		
-		con = psycopg2.connect("dbname='store' host='localhost' port='5432' user='postgres' password='root'")
+		# con = psycopg2.connect("dbname='store' host='localhost' port='5432' user='postgres' password='root'")
+		DATABASE_URL = os.environ['DATABASE_URL']
+        con = psycopg2.connect(DATABASE_URL, sslmode='require')
 		cur =con.cursor()
 		# conn = psycopg2.connect(app_configuration[enviroment].connectionVariables)
 		return con

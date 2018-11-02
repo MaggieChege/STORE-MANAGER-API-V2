@@ -55,3 +55,25 @@ class Sale():
         cur= con.cursor()
         cur.execute("UPDATE products SET quantity = %s WHERE product_id = %s", (remaining_quantity,product_id))
         con.commit()
+
+    def get_sale_by_id(product_id):
+        con=Database_Connection()
+        cur= con.cursor()
+        cur.execute("SELECT * FROM sales WHERE product_id = %s", (product_id,))
+        sale = cur.fetchall()
+        print (sale)
+
+        if sale:
+            sales = []
+            for items in sale:
+                item ={
+                'id':items[0],
+                'product_id':items[1],
+                'quantity':items[2],
+                'remaining_quantity':items[3],
+                'price':items[4],
+                'product_name':items[5],
+                'attendant':items[6],
+                'date_created':items[7]}
+                sales.append(item)
+            return sales
