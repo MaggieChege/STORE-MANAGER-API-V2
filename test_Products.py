@@ -15,10 +15,13 @@ class UserTestCase(unittest.TestCase):
         drop_tables()
         create_tables()
         self.login_user = {"email": "higi@gmail.com", "password":"12345"}
-        self.test_product={"product_name":"Nikes For free 4 ",
-                    "category":"Men oneqwrewrly",
-                    "quantity":2,
-                    "price":5000}
+        self.test_product= {
+            "category": "Men",
+            "price": "5500",
+            "product_id": 3,
+            "product_name": "Nikes Old School ",
+            "quantity": "2"
+        }
         self.test_empty_product_name={"product_name":"",
                         "category":"Men oneqwrewrly",
                         "quantity":2,
@@ -110,14 +113,14 @@ class UserTestCase(unittest.TestCase):
         token = json.loads(response.data.decode())['access_token']
 
         response = self.client.delete(
-        '/api/v2/products/1',
+        '/api/v2/products/2',
         headers=dict(Authorization="Bearer " + token)
         )
         self.assertEqual(response.status_code, 200)
 
 
         response = self.client.get(
-        '/api/v2/products/1',
+        '/api/v2/products/2',
         headers=dict(Authorization="Bearer " + token))
         response_data = json.loads(response.data)
         self.assertEqual('Product Does not exist',response_data["message"])

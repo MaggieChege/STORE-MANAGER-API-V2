@@ -76,4 +76,10 @@ class Product():
                 prods.append(item)
 
             return prods
-        
+    def get_product_name(product_name):
+        con=Database_Connection()
+        cur= con.cursor()
+        cur.execute("SELECT * FROM products WHERE product_name = %s", (product_name,))
+        productname = cur.fetchone()
+        return productname
+       
