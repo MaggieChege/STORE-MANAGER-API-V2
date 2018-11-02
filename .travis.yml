@@ -22,7 +22,7 @@ before_script:
 
   - psql -c "create database store_test;" -U postgres
 
-  - psql -c "create user postgres;" -U postgres
+  # - psql -c "create user postgres;" -U postgres
 
 script:    
 
