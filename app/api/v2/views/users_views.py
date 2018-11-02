@@ -8,6 +8,7 @@ import re
 from functools import wraps
 from app.api.v2.utils.schemas import user_schema
 from flask_expects_json import expects_json
+import datetime
 
 
 def admin_only(f): 
@@ -89,13 +90,15 @@ class UserLogin(Resource):
             return {"message": "User does not exist"},404
         else:
             if Users.verify_hash(dbusers[0][0],password) == True:
-                access_token = create_access_token(identity = email)
-                refresh_token = create_refresh_token(identity = email)
+                exp=datetime.timedelta(minutes=30)
+                access_token = create_access_token(email,exp)
+
+                # refresh_token = create_refresh_token(identity = email)
                 return {
                 'message': 'User was logged in succesfully',
                 'status': 'ok',
                 'access_token': access_token,
-                'refresh_token': refresh_token
+                # 'refresh_token': refresh_token
                 }, 200
             else:
                 return {'message': 'Wrong credentials'},400
