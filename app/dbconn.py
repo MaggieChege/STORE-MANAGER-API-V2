@@ -9,7 +9,7 @@ def Database_Connection():
 		
 		# con = psycopg2.connect("dbname='store' host='localhost' port='5432' user='postgres' password='root'")
 		DATABASE_URL = os.environ['DATABASE_URL']
-        con = psycopg2.connect(DATABASE_URL, sslmode='require')
+        con = psycopg2.connect(DATABASE_URL)
 		cur =con.cursor()
 		# conn = psycopg2.connect(app_configuration[enviroment].connectionVariables)
 		return con
