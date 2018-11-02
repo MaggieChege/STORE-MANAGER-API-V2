@@ -49,15 +49,7 @@ class Sale():
                 sales.append(item)
             return sales
 
-    def get_product_by_id(product_id):
-        con=Database_Connection()
-        cur= con.cursor()
-        cur.execute("SELECT * FROM products WHERE product_id = %s", (product_id,))
-        product = cur.fetchone()
-        if product is None:
-            return None
-        con.commit()
-        return product
+    
     def decrease_quantity(product_id, remaining_quantity):
         con=Database_Connection()
         cur= con.cursor()

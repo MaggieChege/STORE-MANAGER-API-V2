@@ -5,6 +5,8 @@ users = '''CREATE TABLE IF NOT EXISTS users(
 		password varchar(100) NOT NULL,
 		role varchar(50));'''
 
+regiter_admin = """INSERT INTO users (username, email, password, role) VALUES('nicanor','nicanor@gmail.com','12345','Admin');"""
+
 
 products = '''CREATE TABLE IF NOT EXISTS products(
 		product_id serial PRIMARY KEY,
@@ -14,6 +16,7 @@ products = '''CREATE TABLE IF NOT EXISTS products(
 		quantity varchar(50) NOT NULL);'''
 
 sales = '''CREATE TABLE IF NOT EXISTS sales(
+		id serial PRIMARY KEY,
 		product_id INT NOT NULL,
         quantity INT NOT NULL,
         remaining_quantity INT NOT NULL,
@@ -23,11 +26,11 @@ sales = '''CREATE TABLE IF NOT EXISTS sales(
         date_created TIMESTAMP,  
         FOREIGN KEY (product_id) REFERENCES products(product_id)
         );'''
-drop_users="DROP TABLE IF EXISTS users "
-drop_products="DROP TABLE IF EXISTS products "
-drop_sales = "DROP TABLE IF EXISTS sales "
+# drop_users="DROP TABLE IF EXISTS users CASCADE"
+# drop_products="DROP TABLE IF EXISTS products CASCADE"
+# drop_sales = "DROP TABLE IF EXISTS sales CASCADE"
 
 
 
 queries = [users,products,sales]
-drop_queries=[drop_users,drop_products,drop_sales]
+# drop_queries=[drop_users,drop_products,drop_sales]

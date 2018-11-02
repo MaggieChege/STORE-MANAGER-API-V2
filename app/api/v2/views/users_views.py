@@ -10,7 +10,6 @@ from app.api.v2.utils.schemas import user_schema
 from flask_expects_json import expects_json
 
 
-
 def admin_only(f): 
     @wraps(f)
     def decorator_func(*args,**kwargs):
@@ -26,8 +25,8 @@ def admin_only(f):
 
        
 class UserRegistration(Resource):
-    # @jwt_required
-    # @admin_only
+    @jwt_required
+    @admin_only
     @expects_json(user_schema)
     def post(self):
 
@@ -86,6 +85,8 @@ class UserLogin(Resource):
         cur= con.cursor()
         cur.execute(query)
         dbusers= cur.fetchall()
+        print(dbusers)
+        print(dbusers[0][0])
         if len(dbusers) == 0:
             return {"message": "User does not exist"},404
         else:

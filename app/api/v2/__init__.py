@@ -2,7 +2,7 @@ from flask import Flask,Blueprint
 from flask_restful import Api,Resource
 
 # from app.api.v2.views.products_views import Products,Get_product_id
-from app.api.v2.views.products_views import Products,DeleteProd,Products_update
+from app.api.v2.views.products_views import Products,DeleteProd,Products_update,Single_product
 from app.api.v2.views.sale_views import Sales,Get_sale_id,DeleteSale
 from app.api.v2.views.users_views import UserRegistration,UserLogin
 
@@ -14,7 +14,7 @@ api=Api(blue)
 
 
 api.add_resource(Products,"/products")
-
+api.add_resource(Single_product,"/products/<int:product_id>")
 api.add_resource(UserLogin,"/users/login")
 api.add_resource(UserRegistration,"/auth/user")
 api.add_resource(Sales,"/sales")

@@ -44,15 +44,3 @@ def drop_tables():
 		con.commit()
 		cur.close()
 		con.close
-
-
-
-
-
-	# def save_details(tables):
-# 	con = Database_Connection()
-# 	cur= con.cursor()
-# 	cur.execute(tables)
-# 	cur.close()
-# 	con.commit()
-    

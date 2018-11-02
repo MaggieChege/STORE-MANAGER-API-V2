@@ -14,14 +14,14 @@ user_schema={
 products_schema={
 	"type": "object",
     "properties": {
-        "product_id": {type: "integer"},
+        
         "product_name": {type: "string"},
         "category": {type: "string"},
         "price": {type: "string"},
         "quantity": {type: "integer"},
         
     },
-"required": ["product_id", "product_name","category","price","quantity"]
+"required": ["product_name","category","price","quantity"]
 }
 sales_schema={
 	"type": "object",
