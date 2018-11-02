@@ -28,7 +28,7 @@ script:
 
  
 
- -  python -m pytest --cov=app/api/v2
+ -  python -m pytest --cov=
 
  - coveralls
 

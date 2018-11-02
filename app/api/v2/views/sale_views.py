@@ -52,42 +52,6 @@ class Sales(Resource):
         return make_response(jsonify(
             {"message":"Sale record created successfully"}), 201)
 
-        # data =request.get_json()
-        # product_id=data['product_id']
-        # quantity = data['quantity']
-        # attendant=data['attendant']
-
-       
-
-        # product=get_product_by_id(product_id)
-        # print(product)
-        
-
-        # if product is None:
-        #     return {"message":"Product is not available"},404
-
-        # price = product[3]
-        # remaining_quantity=int(product[4]) - int(quantity)
-        # total_sale = int(product[3]) * int(quantity)
-        # name = product[1]
-        # date_created = datetime.now()
-
-
-        # if remaining_quantity < 0:
-        #     return {"message": "Not enough in stock"}
-
-        # newsale = Sale(product_id,quantity,remaining_quantity,price,name,attendant,date_created).create_sale()
-        # print(newsale)
-        # Sale.decrease_quantity(product_id,remaining_quantity)
-        
-
-        # return make_response(jsonify(
-        #     {"message":"Sale record created successfully"}
-        #     ), 201)
-        # "status":"created",
-        #     "product":newsale 
-    
-
 
 class DeleteSale(Resource):
     def delete(self,sale_id):
