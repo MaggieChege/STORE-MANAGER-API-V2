@@ -22,7 +22,7 @@ before_script:
 
   - psql -c "create database store_test;" -U postgres
 
-  - nosetests --with-coverage
+#   - nosetests --with-coverage
 
 script:    
 
