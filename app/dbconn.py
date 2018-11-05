@@ -6,7 +6,7 @@ from app.queries import queries
 
 def Database_Connection():
 	try:
-		
+
 		con = psycopg2.connect("dbname='store' host='localhost' port='5432' user='postgres' password='root'")
 		cur =con.cursor()
 		# conn = psycopg2.connect(app_configuration[enviroment].connectionVariables)
@@ -15,7 +15,7 @@ def Database_Connection():
 
 	except(Exception, psycopg2.DatabaseError) as error:
 		print("Failed to connect", error)
-     
+
 
 def create_tables():
 	try:
@@ -31,13 +31,16 @@ def create_tables():
 		cur.close()
 		con.commit()
 
+# def create_admin():
+	
+
 def drop_tables():
 	try:
 		con=Database_Connection()
 		cur= con.cursor()
 		for drop in drop_queries:
 			cur.execute(drop)
-		
+
 		print("Tables Deleted")
 	except Exception as e:
 		print(e)

@@ -4,14 +4,21 @@ from flask_restful import Resource
 from app.dbconn import Database_Connection
 from app.api.v2.models.sale_models import Sale
 from app.api.v2.views.products_views import Product
-from app.api.v2.views.users_views import admin_only
+from app.api.v2.views.users_views import admin_required,attendant_only
 from app.api.v2.models.users_model import Users
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 from app.api.v2.utils.schemas import sales_schema
 from flask_expects_json import expects_json
 from functools import wraps
+from app.__init__ import *
 
-
+@jwt.expired_token_loader
+def my_expired_token_callback():
+    return jsonify({
+        'status': 401,
+        'sub_status': 42,
+        'msg': 'The token has expired'
+    }), 401
 class Sales(Resource):
     def get(self):
         sales = Sale.get_sales(self)
@@ -19,9 +26,12 @@ class Sales(Resource):
             return make_response(jsonify({"message": "No sale record found"}))
         return make_response(jsonify({"sales":sales}),201)
 
+    @jwt_required
     def post(self):
         data =request.get_json()
         # sale_id = data['sale_id']
+        user_email = get_jwt_identity()
+        user=Users.fetch_by_email(user_email)
         product_name= data['product_name']
         quantity = data['quantity']
         attendant=data['attendant']
@@ -53,6 +63,8 @@ class Sales(Resource):
 
 
 class DeleteSale(Resource):
+    @jwt_required
+    @admin_required
     def delete(self,sale_id):
         Sale.delete_product(sale_id)
         return {"message":"Deleted successfully"}

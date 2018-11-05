@@ -3,7 +3,7 @@ from flask_restful import Resource
 from app.dbconn import Database_Connection
 from app.api.v2.models.users_model import Users
 from passlib.hash import pbkdf2_sha256 as sha256
-from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
+from flask_jwt_extended import (verify_jwt_in_request,get_jwt_claims,create_access_token, get_jwt_identity,jwt_required)
 import re
 from functools import wraps
 from app.api.v2.utils.schemas import user_schema
@@ -11,7 +11,8 @@ from flask_expects_json import expects_json
 import datetime
 
 
-def admin_only(f): 
+
+def admin_required(f): 
     @wraps(f)
     def decorator_func(*args,**kwargs):
         user = Users.fetch_by_role(get_jwt_identity())
@@ -22,10 +23,21 @@ def admin_only(f):
 
     return decorator_func
 
-       
+def attendant_only(f):
+    @wraps(f)
+    def decorator_func(*args,**kwargs):
+        user_email = get_jwt_identity()
+        user=Users.fetch_by_email(user_email)
+        print(user)
+        if user ==  "User":
+            return{"message":"You are logged in as Attendant "},401
+        else:
+            return f(*args,**kwargs)
+
+    return decorator_func
 class UserRegistration(Resource):
     @jwt_required
-    @admin_only
+    @admin_required
     @expects_json(user_schema)
     def post(self):
 
@@ -102,5 +114,3 @@ class UserLogin(Resource):
                 }, 200
             else:
                 return {'message': 'Wrong credentials'},400
-        # return dbusers
-        
