@@ -33,7 +33,7 @@ script:
 
 #  -  python -m pytest --cov=
 
- - coveralls
+#  - coveralls
 
  
 
