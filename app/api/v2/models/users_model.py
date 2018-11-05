@@ -6,6 +6,7 @@ from flask_jwt_extended import (
     get_jwt_identity, get_jwt_claims
 )
 import psycopg2
+# from app.api.v2.views.users_views import User
 
 class Users:
     def __init__(self,username,email,password,role):
@@ -20,6 +21,7 @@ class Users:
         cur= con.cursor()
         cur.execute(query)
         db_users= cur.fetchall()
+        print(type(db_users))
         if db_users:
             users = []
             for items in db_users:
@@ -44,12 +46,12 @@ class Users:
         except Exception as e:
             print (e)
         return user
-        
+
 
     def generate_hash(raw_password):
         return generate_password_hash(raw_password)
 
-    
+
     def verify_hash(hash_password,password):
         return check_password_hash(hash_password,password)
 
@@ -60,19 +62,42 @@ class Users:
         cur=con.cursor()
         cur.execute("SELECT * FROM users WHERE email =%s", (email,))
         selected_user = cur.fetchone()
-        
+        print(selected_user)
+
         return selected_user[4]
         # role_user = selected_user[4]
 
-        
+
     @staticmethod
-    def fetch_by_email(role):
+    def fetch_by_email(email):
         "Fetch a user through email"
         con =Database_Connection()
         cur=con.cursor()
         cur.execute("SELECT * FROM users WHERE email =%s", (email,))
-        selected_user = cur.fetchone()
+        logged_in =cur.fetchall()
+        print(logged_in)
+        if logged_in:
+            user=[]
+            for items in logged_in:
+                item ={
+                
+                'username':items[1],
+                'email':items[2],
+                'password':items[3],
+                'role':items[4]
+                }
+                user.append(item)
+            return user
+            
 
-        return selected_user[2]
+       
 
-
+    @staticmethod
+    def get_by_id(user_id):
+        "Fetch a user through email"
+        if user_id:
+            con =Database_Connection()
+            cur=con.cursor()
+            cur.execute("SELECT * FROM users WHERE id ='%s';" % user_id)
+            return  cur.fetchone()
+         

@@ -12,7 +12,7 @@ class UserTestCase(unittest.TestCase):
         self.client=self.app.test_client()
         self.context = self.app.app_context()
         with self.context:
-            create_tables()
+            create_tables()=
         self.logged_in_admin={"email":'higi@gmail.com',"password":'12345'}
         self.register_user_without_email ={ "username":"joan", "password":"123450","role":"User"}
         self.register_user = { "username":"joan","email": "joan@gmail.com", "password":"123450","role":"User"}
