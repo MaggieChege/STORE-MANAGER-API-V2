@@ -12,7 +12,10 @@ services:
 
 install:    
 
- - pip install -r requirements.txt
+  - pip install --upgrade pip
+  - pip install -r requirements.txt
+  - pip install coverage
+  - pip install coveralls
 
  # - pip install codeclimate-test-reporter
 
@@ -26,7 +29,7 @@ before_script:
 
 script:    
 
- - coverage run --source=app -m pytest && coverage report
+ - coverage run --source=app/app/tests/v2 -m pytest && coverage report
 
  # -  python -m pytest --cov=
 
