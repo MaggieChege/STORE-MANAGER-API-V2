@@ -27,7 +27,6 @@ before_script:
 script:    
 
  - coveralls
- - python -m pytest --cov=app/tests/v2
 
  
 
