@@ -1,4 +1,5 @@
 import unittest
+import sys
 import requests
 import pytest
 from app import create_app
@@ -142,10 +143,5 @@ class UserTestCase(unittest.TestCase):
         response_data = json.loads(response.data)
         self.assertEqual(response_data["message"],'You must be logged in as Admin ')
         self.assertEqual(response.status_code, 403)
-
-
-
-
-        drop_tables()
 
 
