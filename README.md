@@ -7,11 +7,11 @@ This is Version 2 of Store Manager application. This web application stores enab
 
 
 
-#Getting Started
+# Getting Started
 
 Setup your project  with the following steps
 
-#Installing
+# Installing
 
 Git clone this repository
 ``` https://github.com/MaggieChege/STORE-MANAGER-API-V2.git ```
@@ -30,17 +30,17 @@ Create a .nv file and add the following variables
 ``` export APP_SETTINGS="development" ```
 
 
-#Install all dependencies
+# Install all dependencies
 
 ``` pip install -r requirements.txt ```
 
 run the application ``` flask run ```
 
 
-#Check the online Postman Documentation
+# Check the online Postman Documentation
 https://documenter.getpostman.com/view/5420872/RzZ4p1Zi
 
-#PIVOTAL TRACKER STORIES
+# PIVOTAL TRACKER STORIES
 https://www.pivotaltracker.com/n/projects/2209137
 
 The follwing endoints should work
@@ -71,6 +71,6 @@ The follwing endoints should work
 ``` 8.POST /sales ```
 
 
-#RUN TESTS
+# RUN TESTS
 
 Run unittests; ``` pytest -v ```

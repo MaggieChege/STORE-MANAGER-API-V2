@@ -22,9 +22,6 @@ before_script:
 
 
   - psql -c "create database store;" -U postgres
-  # - psql -c "create database store_test;" -U postgres
-
-#   - nosetests --with-coverage
 
 
 script:    
@@ -33,7 +30,7 @@ script:
 
  # -  python -m pytest --cov=
 
- - coveralls
+#  - coveralls
 
  
 
