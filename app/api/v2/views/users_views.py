@@ -3,38 +3,28 @@ from flask_restful import Resource
 from app.dbconn import Database_Connection
 from app.api.v2.models.users_model import Users
 from passlib.hash import pbkdf2_sha256 as sha256
-from flask_jwt_extended import (verify_jwt_in_request,get_jwt_claims,create_access_token, get_jwt_identity,jwt_required)
+from flask_jwt_extended import (verify_jwt_in_request,get_jwt_claims,create_access_token, get_jwt_identity,jwt_required,get_raw_jwt)
 import re
 from functools import wraps
 from app.api.v2.utils.schemas import user_schema
 from flask_expects_json import expects_json
 import datetime
+from app.api.v2.views.blacklist import add_to_blacklist
 
 
 
 def admin_required(f): 
     @wraps(f)
     def decorator_func(*args,**kwargs):
-        user = Users.fetch_by_role(get_jwt_identity())
-        if not user ==  "Admin":
-            return{"message":"You must be logged in as Admin to add a product"},403
-        else:
-            return f(*args,**kwargs)
-
-    return decorator_func
-
-def attendant_only(f):
-    @wraps(f)
-    def decorator_func(*args,**kwargs):
-        user_email = get_jwt_identity()
-        user=Users.fetch_by_email(user_email)
+        user = Users.fetch_by_email(get_jwt_identity())
         print(user)
-        if user ==  "User":
-            return{"message":"You are logged in as Attendant "},401
+        if not user ==  "Admin":
+            return{"message":"You must be logged in as Admin "},403
         else:
             return f(*args,**kwargs)
 
     return decorator_func
+
 class UserRegistration(Resource):
     @jwt_required
     @admin_required
@@ -97,13 +87,13 @@ class UserLogin(Resource):
         cur.execute(query)
         dbusers= cur.fetchall()
         print(dbusers)
-        print(dbusers[0][0])
+        # print(dbusers[0][0])
         if len(dbusers) == 0:
             return {"message": "User does not exist"},404
         else:
             if Users.verify_hash(dbusers[0][0],password) == True:
                 exp=datetime.timedelta(minutes=30)
-                access_token = create_access_token(email,exp)
+                access_token = create_access_token(email)
 
                 # refresh_token = create_refresh_token(identity = email)
                 return {
@@ -114,3 +104,12 @@ class UserLogin(Resource):
                 }, 200
             else:
                 return {'message': 'Wrong credentials'},400
+
+class Logout(Resource):
+
+    @jwt_required
+    def delete(self):
+        # blacklist = set()
+        jti = get_raw_jwt()['jti']
+        add_to_blacklist(jti)
+        return {"message":"Successfully Logged out"},200

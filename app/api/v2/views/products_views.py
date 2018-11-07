@@ -17,6 +17,7 @@ class Products(Resource):
         return make_response(jsonify({"message":"all product in the system","products":dd,"status":"okay"}),200)
     
 
+    @jwt_required
     @admin_required
     @expects_json(products_schema)
     def post(self):
@@ -57,7 +58,9 @@ class Products(Resource):
         # products.append(product)
         return make_response(jsonify({'product':product}),201)
 
+
 class DeleteProd(Resource):
+    
     @jwt_required
     @admin_required
     def delete(self,product_id):
@@ -78,6 +81,8 @@ class Products_update(Resource):
         quantity = data["quantity"]
 
         query=Product( product_name, category, price, quantity).update(product_id)
+        return{"message":"Product successfully updated","Product":data}
+        # print(data)
 
         return query
 

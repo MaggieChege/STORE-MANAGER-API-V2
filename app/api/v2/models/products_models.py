@@ -1,5 +1,6 @@
 from app.dbconn import Database_Connection
 from flask import request, jsonify, make_response
+# from app.api.v2.views.products_views import Products_update
 
 import psycopg2
 
@@ -55,7 +56,7 @@ class Product():
         cur= con.cursor()
         update =cur.execute(query, (self.product_name, self.category, self.price, self.quantity, product_id))
         con.commit()
-        return {"message":"successfully updated"},
+        return {"message":"Product Successfully updated","Product":update},
     def get_product_by_id(product_id):
         con=Database_Connection()
         cur= con.cursor()

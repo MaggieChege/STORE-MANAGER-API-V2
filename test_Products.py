@@ -48,7 +48,7 @@ class UserTestCase(unittest.TestCase):
         headers=dict(Authorization="Bearer " + token),
         content_type = 'application/json')
         response_data = json.loads(response.data)
-        self.assertEqual(response_data["message"],'Product successfully Added' )
+        self.assertEqual(response_data["message"],"Product successfully Added" )
         self.assertEqual(response.status_code, 200)
 
     def test_empty_product(self):

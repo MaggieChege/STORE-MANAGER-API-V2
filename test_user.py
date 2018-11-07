@@ -12,7 +12,7 @@ class UserTestCase(unittest.TestCase):
         self.client=self.app.test_client()
         self.context = self.app.app_context()
         with self.context:
-            create_tables()=
+            create_tables()
         self.logged_in_admin={"email":'higi@gmail.com',"password":'12345'}
         self.register_user_without_email ={ "username":"joan", "password":"123450","role":"User"}
         self.register_user = { "username":"joan","email": "joan@gmail.com", "password":"123450","role":"User"}
@@ -140,7 +140,12 @@ class UserTestCase(unittest.TestCase):
         headers=dict(Authorization="Bearer " + token),
         content_type = 'application/json')
         response_data = json.loads(response.data)
-        self.assertEqual(response_data["message"],'You must be logged in as Admin to add a product')
+        self.assertEqual(response_data["message"],'You must be logged in as Admin ')
         self.assertEqual(response.status_code, 403)
+
+
+
+
+        drop_tables()
 
 

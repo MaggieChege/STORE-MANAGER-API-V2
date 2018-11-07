@@ -55,17 +55,16 @@ class Users:
     def verify_hash(hash_password,password):
         return check_password_hash(hash_password,password)
 
-    @staticmethod
-    def fetch_by_role(email):
-        "Fetch a user through email"
-        con =Database_Connection()
-        cur=con.cursor()
-        cur.execute("SELECT * FROM users WHERE email =%s", (email,))
-        selected_user = cur.fetchone()
-        print(selected_user)
-
-        return selected_user[4]
-        # role_user = selected_user[4]
+    # @staticmethod
+    # def fetch_by_role(role):
+    #     if role:
+    #         "Fetch a user through email"
+    #         con =Database_Connection()
+    #         cur=con.cursor()
+    #         cur.execute("SELECT * FROM users WHERE role =%s", (role,))
+    #         selected_user = cur.fetchone()
+    #         print(selected_user)
+    #         return selected_user[4]
 
 
     @staticmethod
@@ -74,20 +73,21 @@ class Users:
         con =Database_Connection()
         cur=con.cursor()
         cur.execute("SELECT * FROM users WHERE email =%s", (email,))
-        logged_in =cur.fetchall()
-        print(logged_in)
-        if logged_in:
-            user=[]
-            for items in logged_in:
-                item ={
-                
-                'username':items[1],
-                'email':items[2],
-                'password':items[3],
-                'role':items[4]
-                }
-                user.append(item)
-            return user
+        logged_in =cur.fetchone()
+        print("logged_in",logged_in[4])
+        print(type(logged_in))
+        # if logged_in:
+        #     user=[]
+        #     for items in logged_in:
+        #         item ={
+        #         'id':items[0],           
+        #         'username':items[1],
+        #         'email':items[2],
+        #         'password':items[3],
+        #         'role':items[4]
+        #         }
+        #         user.append(item)
+        return logged_in[4]
             
 
        
