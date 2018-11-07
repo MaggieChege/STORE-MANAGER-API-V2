@@ -12,7 +12,7 @@ services:
 
 install:    
 
-  - pip install --upgrade pip
+  
   - pip install -r requirements.txt
   - pip install coverage
   - pip install coveralls
@@ -29,11 +29,11 @@ before_script:
 
 script:    
 
- - coverage run --source=app/app/tests/v2 -m pytest && coverage report
+ - python -m pytest --cov=app/app/tests/v2
 
  # -  python -m pytest --cov=
 
-#  - coveralls
+ - coveralls
 
  
 
