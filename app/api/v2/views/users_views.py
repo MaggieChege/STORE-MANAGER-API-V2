@@ -10,6 +10,7 @@ from app.api.v2.utils.schemas import user_schema
 from flask_expects_json import expects_json
 import datetime
 from app.api.v2.views.blacklist import add_to_blacklist
+from app import dbconn
 
 
 

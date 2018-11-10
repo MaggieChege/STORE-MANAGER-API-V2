@@ -1,7 +1,7 @@
-import os
 from app import create_app
 
-app =create_app(os.getenv("APP_SETTINGS"))
+config_name = 'development'
+app =create_app(config_name)
 
 
 

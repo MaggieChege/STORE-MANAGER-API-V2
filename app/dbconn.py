@@ -2,7 +2,11 @@ import psycopg2
 import os
 from instance.config import app_configuration
 from app.queries import queries
-# enviroment =os.environ['ENVIRONMENT']
+
+
+enviroment = os.environ['ENV']
+
+url = os.getenv('DATABASE_URL')
 
 def Database_Connection():
 	try:

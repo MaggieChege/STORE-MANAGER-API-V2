@@ -2,19 +2,18 @@ import os
 
 
 class Config():
-	debug = False
-	SECRET = os.getenv('SECRET')
-
-class DevelopmentConfig(Config):
-	debug= True
+	DEBUG = False
 	DATABASE_URL = os.getenv('DATABASE_URL')
+class DevelopmentConfig(Config):
+	DEBUG= True
+	DATABASE_URL = "dbname='store' host='localhost' port='5432' user='postgres' password='root'"
+	os.environ['ENV']="development"
 
 class TestingConfig(Config):
     '''Testing app configurations'''
     TESTING = True
     DEBUG = True
-    connection_Variables ="dbname='store_test' user='postgres' host='localhost' password='Kwaziest.'"
-    os.environ['ENVIRONMEMENT']="testing"
+    TESTING_DATABASE_URL ="dbname='store_tests' host='localhost' port='5432' user='postgres' password='root'"
 class ProductionConfig(Config):
     """Production Config"""
     DEBUG = False
