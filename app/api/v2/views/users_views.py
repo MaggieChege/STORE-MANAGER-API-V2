@@ -28,8 +28,8 @@ def admin_required(f):
     return decorator_func
 
 class UserRegistration(Resource):
-    @jwt_required
-    @admin_required
+    # @jwt_required
+    # @admin_required
     @expects_json(user_schema)
     def post(self):
 
@@ -109,7 +109,7 @@ class UserLogin(Resource):
 
 class Logout(Resource):
 
-    @jwt_required
+    # @jwt_required
     def delete(self):
         # blacklist = set()
         jti = get_raw_jwt()['jti']

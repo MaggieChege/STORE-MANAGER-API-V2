@@ -16,13 +16,7 @@ from app import db
 
 con = db.con
 cur = db.cursor
-@jwt.expired_token_loader
-def my_expired_token_callback():
-    return jsonify({
-        'status': 401,
-        'sub_status': 42,
-        'msg': 'The token has expired'
-    }), 401
+
 class Sales(Resource):
     def get(self):
         sales = Sale.get_sales(self)
@@ -67,8 +61,8 @@ class Sales(Resource):
 
 
 class DeleteSale(Resource):
-    @jwt_required
-    @admin_required
+    # @jwt_required
+    # @admin_required
     def delete(self,sale_id):
         Sale.delete_product(sale_id)
         return {"message":"Deleted successfully"}
