@@ -4,9 +4,9 @@ from psycopg2.extras import RealDictCursor
 
 class Database_Connection:
 	 '''Class for database connection'''
-    con = None
-    cursor = None
-    app = None
+    # con = None
+    # cursor = None
+    # app = None
 
     def init_app(self, app):
         '''create the database connection'''
