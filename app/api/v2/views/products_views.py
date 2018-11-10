@@ -23,8 +23,8 @@ class Products(Resource):
         return make_response(jsonify({"message":"all product in the system","products":dd,"status":"okay"}),200)
     
 
-    @jwt_required
-    @admin_required
+    # @jwt_required
+    # @admin_required
     @expects_json(products_schema)
     def post(self):
         data = request.get_json()
@@ -67,16 +67,16 @@ class Products(Resource):
 
 class DeleteProd(Resource):
     
-    @jwt_required
-    @admin_required
+    # @jwt_required
+    # @admin_required
     def delete(self,product_id):
         # db_products =Product.get_product(self)
         Product.delete_product(product_id)
         return {"message":"Deleted successfully"}
 
 class Products_update(Resource):
-    @jwt_required
-    @admin_required
+    # @jwt_required
+    # @admin_required
     @expects_json(products_schema)
     def put(self,product_id):
         data = request.get_json()
