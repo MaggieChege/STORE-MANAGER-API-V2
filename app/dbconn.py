@@ -1,53 +1,19 @@
-import psycopg2
 import os
-from instance.config import app_config
-from app.queries import queries
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
+class Database_Connection:
+	 '''Class for database connection'''
+    con = None
+    cursor = None
+    app = None
 
-environment = os.environ['ENVIRONMENT']
-
-url = os.getenv('DATABASE_URL')
-
-def Database_Connection():
-	try:
-
-		con = psycopg2.connect(app_config[environment].DATABASE_URL)
-		cur =con.cursor()
-		# conn = psycopg2.connect(app_configuration[enviroment].connectionVariables)
-		return con
-		# return conn
-
-	except(Exception, psycopg2.DatabaseError) as error:
-		print("Failed to connect", error)
-
-
-def create_tables():
-	try:
-		con=Database_Connection()
-		cur= con.cursor()
-		for tables in queries:
-			cur.execute(tables)
-		print("Tables Created")
-	except (Exception,psycopg2.DatabaseError) as error:
-		print("Failed to connect", error)
-
-	finally:
-		cur.close()
-		con.commit()
-
-# def create_admin():
-	
-
-def drop_tables():
-	try:
-		con=Database_Connection()
-		cur= con.cursor()
-		for drop in drop_queries:
-			cur.execute(drop)
-
-		print("Tables Deleted")
-	except Exception as e:
-		print(e)
-		con.commit()
-		cur.close()
-		con.close
+    def init_app(self, app):
+        '''create the database connection'''
+        self.con = psycopg2.connect(
+            dbname="d82kojevmkac9n",
+            user="pnunuyfihqobek",
+            host="ec2-54-204-14-96.compute-1.amazonaws.com",
+            password="93c9437a1e270c0b5951d9421f7a27a0ba4d023e3e00a2df4e6451d30cb0e503"
+            )
+        self.cursor = self.con.cursor(cursor_factory=RealDictCursor)

@@ -3,6 +3,10 @@ from flask import request, jsonify, make_response
 # from app.api.v2.views.products_views import Products_update
 
 import psycopg2
+from app import db
+con = db.con
+cur = db.cursor
+
 
 products =[]
 class Product():
@@ -24,8 +28,8 @@ class Product():
             return {"message": "Could not create a product"}
     def get_product(self):
         query="SELECT * FROM products"
-        con=Database_Connection()
-        cur= con.cursor()
+        # con=Database_Connection()
+        # cur= con.cursor()
         cur.execute(query)
         db_products= cur.fetchall()
         if db_products:
@@ -42,8 +46,8 @@ class Product():
             return prods
 
     def delete_product(product_id):
-        con=Database_Connection()
-        cur= con.cursor()
+        # con=Database_Connection()
+        # cur= con.cursor()
         query = "DELETE FROM products where product_id = %s;"
         update =cur.execute(query, (str(product_id)))
         con.commit()
@@ -51,15 +55,15 @@ class Product():
 
     def update(self, product_id):
         query="UPDATE products SET product_name=%s,category=%s,price=%s,quantity=%s where product_id = %s" 
-        con=Database_Connection()
-        con.cursor()
+        # con=Database_Connection()
+        # con.cursor()
         cur= con.cursor()
         update =cur.execute(query, (self.product_name, self.category, self.price, self.quantity, product_id))
         con.commit()
         return {"message":"Product Successfully updated","Product":update},
     def get_product_by_id(product_id):
-        con=Database_Connection()
-        cur= con.cursor()
+        # con=Database_Connection()
+        # cur= con.cursor()
         cur.execute("SELECT * FROM products WHERE product_id = %s", (product_id,))
         product = cur.fetchall()
         print (type(product))
@@ -78,8 +82,8 @@ class Product():
 
             return prods
     def get_product_name(product_name):
-        con=Database_Connection()
-        cur= con.cursor()
+        # con=Database_Connection()
+        # cur= con.cursor()
         cur.execute("SELECT * FROM products WHERE product_name = %s", (product_name,))
         productname = cur.fetchone()
         return productname

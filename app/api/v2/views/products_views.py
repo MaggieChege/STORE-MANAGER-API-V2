@@ -1,12 +1,18 @@
 from flask import request, jsonify, make_response
 from flask_restful import Resource
-from app.dbconn import Database_Connection
+# from app.dbconn import Database_Connection
 from app.api.v2.models.products_models import Product
 from app.api.v2.models.users_model import Users
 from app.api.v2.views.users_views import admin_required
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from app.api.v2.utils.schemas import products_schema
 from flask_expects_json import expects_json
+
+
+from app import db
+con = db.con
+cur = db.cursor
+
 class Products(Resource):
     
     def get(self):
@@ -49,8 +55,8 @@ class Products(Resource):
         if type((request.json['price']) or (request.json(quantity))) not in[int or float]:
             return{"message": "Must be a Number"}
 
-        con =Database_Connection()
-        cur=con.cursor()
+        # con =Database_Connection()
+        # cur=con.cursor()
         query = "INSERT INTO products(product_name,category,price,quantity) VALUES('{}','{}','{}','{}');".format(product_name,category,price,quantity)
         cur.execute(query)
         con.commit()

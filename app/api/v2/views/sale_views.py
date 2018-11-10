@@ -1,7 +1,7 @@
 from datetime import datetime
 from flask import request, jsonify, make_response
 from flask_restful import Resource
-from app.dbconn import Database_Connection
+# from app.dbconn import Database_Connection
 from app.api.v2.models.sale_models import Sale
 from app.api.v2.views.products_views import Product
 from app.api.v2.views.users_views import admin_required
@@ -11,7 +11,11 @@ from app.api.v2.utils.schemas import sales_schema
 from flask_expects_json import expects_json
 from functools import wraps
 from app.__init__ import *
+from app import db
 
+
+con = db.con
+cur = db.cursor
 @jwt.expired_token_loader
 def my_expired_token_callback():
     return jsonify({

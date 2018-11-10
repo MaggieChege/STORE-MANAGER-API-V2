@@ -1,8 +1,9 @@
 from flask import Flask,Blueprint
-from app.dbconn import create_tables
+from app.dbconn import Database_Connection
 from flask_jwt_extended import JWTManager,get_raw_jwt
 from instance.config import app_config 
 from app.api.v2.models.users_model import *
+db = Database_Connection()
 jwt = JWTManager()
 
 
@@ -15,7 +16,7 @@ def create_app(config_name):
     app.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
     app.config['JWT_BLACKLIST_ENABLED'] = True
     app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']
-    create_tables()
+    db.init_app(app)
     jwt.init_app(app)
 
 

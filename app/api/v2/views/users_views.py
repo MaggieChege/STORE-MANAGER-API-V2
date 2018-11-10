@@ -10,8 +10,9 @@ from app.api.v2.utils.schemas import user_schema
 from flask_expects_json import expects_json
 import datetime
 from app.api.v2.views.blacklist import add_to_blacklist
-from app import dbconn
-
+from app import db
+con = db.con
+cur = db.cursor
 
 
 def admin_required(f): 
@@ -83,8 +84,8 @@ class UserLogin(Resource):
         if not password or email == "":
             return {'message': 'password cannot be empty'},400
         query = "SELECT password FROM users WHERE email= '{}'".format(data['email'])
-        con=Database_Connection()
-        cur= con.cursor()
+        # con=Database_Connection()
+        # cur= con.cursor()
         cur.execute(query)
         dbusers= cur.fetchall()
         print(dbusers)
