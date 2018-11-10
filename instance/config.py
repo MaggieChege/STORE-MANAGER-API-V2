@@ -3,11 +3,11 @@ import os
 
 class Config():
 	DEBUG = False
-	DATABASE_URL = os.getenv('DATABASE_URL')
+	SECRET_KEY="secret"
 class DevelopmentConfig(Config):
 	DEBUG= True
 	DATABASE_URL = "dbname='store' host='localhost' port='5432' user='postgres' password='root'"
-	os.environ['ENV']="development"
+	os.environ['ENVIRONMENT']="development"
 
 class TestingConfig(Config):
     '''Testing app configurations'''
@@ -21,11 +21,10 @@ class ProductionConfig(Config):
 
 
 
-app_configuration={
+app_config={
 	"development" : DevelopmentConfig,
 	"testing": TestingConfig,
-	"production":ProductionConfig,
-	
+	"production":ProductionConfig
 }
 
 # secret_key = Config.SECRET

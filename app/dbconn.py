@@ -1,17 +1,17 @@
 import psycopg2
 import os
-from instance.config import app_configuration
+from instance.config import app_config
 from app.queries import queries
 
 
-enviroment = os.environ['ENV']
+environment = os.environ['ENVIRONMENT']
 
-url = os.getenv('DATABASE_URL')
+# url = os.getenv('DATABASE_URL')
 
 def Database_Connection():
 	try:
 
-		con = psycopg2.connect("dbname='store' host='localhost' port='5432' user='postgres' password='root'")
+		con = psycopg2.connect(app_config[environment].DATABASE_URL)
 		cur =con.cursor()
 		# conn = psycopg2.connect(app_configuration[enviroment].connectionVariables)
 		return con
