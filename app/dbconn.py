@@ -6,7 +6,7 @@ from app.queries import queries
 
 environment = os.environ['ENVIRONMENT']
 
-# url = os.getenv('DATABASE_URL')
+url = os.getenv('DATABASE_URL')
 
 def Database_Connection():
 	try:
