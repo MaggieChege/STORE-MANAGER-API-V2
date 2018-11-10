@@ -4,6 +4,8 @@ from flask import request, jsonify, make_response
 
 import psycopg2
 from app import db
+
+
 con = db.con
 cur = db.cursor
 
