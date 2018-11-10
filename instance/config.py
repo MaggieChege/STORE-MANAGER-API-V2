@@ -4,9 +4,11 @@ import os
 class Config():
 	DEBUG = False
 	SECRET_KEY="secret"
+	APP_SETTINGS = os.getenv("APP_SETTINGS")
+
 class DevelopmentConfig(Config):
 	DEBUG= True
-	APP_SET = "development"
+	APP_SETTINGS = "development"
 	DATABASE_URL = "dbname='store' host='localhost' port='5432' user='postgres' password='root'"
 	os.environ['ENVIRONMENT']="development"
 
