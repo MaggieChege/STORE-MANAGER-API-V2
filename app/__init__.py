@@ -1,5 +1,5 @@
 from flask import Flask,Blueprint
-from flask_jwt_extended import JWTManager
+# from flask_jwt_extended import JWTManager
 # from app.api.v2.models.users_model import *
 from app.dbconn import Database_Connection
 from instance.config import app_config 
