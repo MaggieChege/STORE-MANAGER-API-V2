@@ -8,9 +8,10 @@ class Config():
 
 class DevelopmentConfig(Config):
 	DEBUG= True
-	APP_SETTINGS = "development"
-	DATABASE_URL = "dbname='store' host='localhost' port='5432' user='postgres' password='root'"
-	os.environ['ENVIRONMENT']="development"
+	DATABASE_NAME = "store_manager_3"
+	# APP_SETTINGS = "development"
+	# DATABASE_URL = "dbname='store' host='localhost' port='5432' user='postgres' password='root'"
+	# os.environ['ENVIRONMENT']="development"
 
 class TestingConfig(Config):
     '''Testing app configurations'''
