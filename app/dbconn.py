@@ -8,6 +8,7 @@ class Database_Connection:
     app = None
     def init_app(self, app):
         '''create the database connection'''
+        self.app = app
         self.con = psycopg2.connect(
             dbname="d82kojevmkac9n",
             user="pnunuyfihqobek",

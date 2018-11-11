@@ -6,8 +6,10 @@ from flask_jwt_extended import (
     get_jwt_identity, get_jwt_claims
 )
 import psycopg2
-# from app.api.v2.views.users_views import User
 from app import db
+
+
+
 con = db.con
 cur = db.cursor
 class Users:
