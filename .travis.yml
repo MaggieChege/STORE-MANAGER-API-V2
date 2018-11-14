@@ -40,7 +40,7 @@ after_success:
 cache: pip 
 before_script:
  
- - psql -c 'create database teststore;' -U postgres
+ - psql -c 'create database store_test;' -U postgres
 script:
 #  - coverage run --source=app -m pytest && coverage report 
 
