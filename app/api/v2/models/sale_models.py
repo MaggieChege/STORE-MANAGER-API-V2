@@ -21,7 +21,7 @@ class Sale():
             con=Database_Connection()
             cur= con.cursor()
             data = cur.execute("INSERT INTO sales(product_id, quantity, remaining_quantity, price, product_name,attendant,date_created) VALUES('{}','{}','{}','{}','{}','{}','{}');".format(self.product_id,self.quantity,self.remaining_quantity,self.price,self.product_name, self.attendant,self.date_created))
-            print(data)
+            
             con.commit()
         except Exception as e:
             print(e)

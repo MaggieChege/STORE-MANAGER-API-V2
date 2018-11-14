@@ -14,11 +14,37 @@ def create_app(config_name):
     from app.api.v2 import blue as v2
     app.register_blueprint(v2)
     app.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
-    # app.config['JWT_BLACKLIST_ENABLED'] = True
-    # app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']
+    app.config['JWT_BLACKLIST_ENABLED'] = True
+    app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']
     create_tables()
     CORS(app)
     jwt.init_app(app)
+
+
+    # @jwt.user_identity_loader
+    # def user_identity_lookup(logged_user):
+    #     '''set token identity for logged_user'''
+    #     print(logged_user)
+    #     return logged_user
+
+    # @jwt.user_claims_loader
+    # def add_claims_to_access_token(logged_user):
+    #     '''This methods adds claims from logged_user'''
+    #     return {'role': logged_user['role'],'user':logged_user['id']}
+
+    @jwt.expired_token_loader
+    def expired_handler():
+        return jsonify({
+            "Message": "Token has expired"
+
+            })
+    @jwt.token_in_blacklist_loader
+    def check_blacklist(decrypted_token):
+        '''check if token is in black list'''
+        token = decrypted_token['jti']
+        revoked_tokens = Users()
+        return revoked_tokens.check_blacklist(token)
+
 
 
 
@@ -33,7 +59,7 @@ def create_app(config_name):
     @app.errorhandler(500)
     def internal_error(e):
         return make_response(jsonify({
-            "Message": "Internal server"
+            "Message": "Token has expired"
         }), 500)
     return app
 

@@ -36,6 +36,10 @@ class Sales(Resource):
         quantity = data['quantity']
         attendant=data['attendant']
 
+        if not product_name or not quantity or not attendant:
+            return {"message": "All fields are required"},400
+
+
        
 
         product=Product.get_product_name(product_name)
@@ -54,7 +58,7 @@ class Sales(Resource):
             return {"message": "Not enough in stock"}
 
         newsale = Sale(product_id,quantity,remaining_quantity,price,product_name,attendant,date_created).create_sale()
-        print(newsale)
+       
         Sale.decrease_quantity(product_id,remaining_quantity)
         
 
