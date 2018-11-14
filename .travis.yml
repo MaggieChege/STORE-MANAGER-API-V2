@@ -39,7 +39,7 @@ after_success:
 
 cache: pip 
 before_script:
- - cp env.example .env
+ 
  - psql -c 'create database teststore;' -U postgres
 script:
  - coverage run --source=app -m pytest && coverage report 
