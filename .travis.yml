@@ -30,7 +30,7 @@ before_script:
 
 script:    
 
- - coveralls
+  - coverage run --source=app -m pytest && coverage report
 
  
 
