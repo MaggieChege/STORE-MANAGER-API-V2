@@ -1,7 +1,7 @@
 
 [![Build Status](https://travis-ci.org/MaggieChege/STORE-MANAGER-API-V2.svg?branch=develop)](https://travis-ci.org/MaggieChege/STORE-MANAGER-API-V2)
 
-[![Coverage Status](https://coveralls.io/repos/github/MaggieChege/STORE-MANAGER-API-V2/badge.svg?branch=develop)](https://coveralls.io/github/MaggieChege/STORE-MANAGER-API-V2?branch=develop)
+[![Coverage Status](https://coveralls.io/repos/github/MaggieChege/STORE-MANAGER-API-V2/badge.png?branch=develop)](https://coveralls.io/github/MaggieChege/STORE-MANAGER-API-V2?branch=develop)
 
 
 # STORE-MANAGER-API-V2
