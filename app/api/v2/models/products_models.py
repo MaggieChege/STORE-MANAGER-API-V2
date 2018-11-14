@@ -62,7 +62,7 @@ class Product():
         cur= con.cursor()
         cur.execute("SELECT * FROM products WHERE product_id = %s", (product_id,))
         product = cur.fetchall()
-        print (type(product))
+       
 
         if product:
             prods = []

@@ -17,14 +17,35 @@ from app import dbconn
 def admin_required(f): 
     @wraps(f)
     def decorator_func(*args,**kwargs):
-        user = Users.fetch_by_email(get_jwt_identity())
-        print(user)
-        if not user ==  "Admin":
-            return{"message":"You must be logged in as Admin "},403
-        else:
-            return f(*args,**kwargs)
+        token = None
+        if 'access_token' in request.headers:
+            token = request.headers['access_token']
+            print(request.headers)
+        elif token:
+            return make_response(jsonify({
+                "message": "Token is required"
+                }),499)
+        try:
+            user = Users.fetch_by_email(get_jwt_identity())
+            
+            if not user ==  "Admin":
+                return{"message":"You must be logged in as Admin "},403
+            else:
+                return f(*args,**kwargs)
+        except Exception as e:
+            print(e)
+            # raise ExpiredSignatureError('Signature has expired')
 
     return decorator_func
+
+# try:
+#     pass
+# except Exception as e:
+#     raise
+# else:
+#     pass
+# finally:
+#     pass
 
 class UserRegistration(Resource):
     @jwt_required
@@ -37,16 +58,20 @@ class UserRegistration(Resource):
         email = data['email']
         role = data['role']
         raw_password = data['password']
+
+        if not username or not email or not role or not raw_password:
+            return make_response(jsonify({
+                "message": "All fields are required"
+                }),400)
         if not email or email =="":
-            return {message:"Enter an email"}
+            return jsonify({"message":"Enter an email"})
         if not username or username =="":
-            return {message:"Enter an email"}
+            return jsonify({"message":"Enter an username"})
             
         if not role or role =="":
-            return {message:"Enter an email"}
+            return jsonify({"message":"Enter an email"})
 
 
-            return make_response(jsonify({"message":"email cannot be empty"}))
         if not re.match(r"[^@]+@[^@]+\.[^@]+",email):
             return {"message": "Enter correct email format"}
                     # generate hash value for rawpassword
@@ -61,14 +86,13 @@ class UserRegistration(Resource):
        
         user = Users(username,email,password,role).create_user()
         
-        response =jsonify({
+        return make_response(jsonify({
 
             'message': 'User was created succesfully',
             'status': 'ok',
             
-            })
-        response.status_code = 201
-        return response
+            }),201)
+        
 
 
 
@@ -87,14 +111,20 @@ class UserLogin(Resource):
         cur= con.cursor()
         cur.execute(query)
         dbusers= cur.fetchall()
-        print(dbusers)
+     
         # print(dbusers[0][0])
         if len(dbusers) == 0:
             return {"message": "User does not exist"},404
         else:
+            user2 =(email,password)
+            print(user2,"user2")
             if Users.verify_hash(dbusers[0][0],password) == True:
                 exp=datetime.timedelta(minutes=30)
-                access_token = create_access_token(email)
+                # logged_user = user2.get_one_user()
+                # names = logged_user["names"]
+                # role = logged_user["role"]
+                access_token = create_access_token(identity =email)
+
 
                 # refresh_token = create_refresh_token(identity = email)
                 return {
@@ -108,6 +138,7 @@ class UserLogin(Resource):
 
 class Logout(Resource):
 
+    # @jwt_required
     @jwt_required
     def delete(self):
         # blacklist = set()

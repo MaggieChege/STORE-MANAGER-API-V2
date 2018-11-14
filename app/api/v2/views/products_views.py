@@ -26,6 +26,12 @@ class Products(Resource):
         category = data['category']
         price = data['price']
         quantity = data['quantity']
+        
+        if not product_name or not category or not price or not quantity:
+            return make_response(jsonify({
+                "message": "All fields are required"
+                }),400)
+
         if not product_name or product_name == "":
             return {"message":"Product Name is required"}
         if not category or category == "":
@@ -82,14 +88,14 @@ class Products_update(Resource):
 
         query=Product( product_name, category, price, quantity).update(product_id)
         return{"message":"Product successfully updated","Product":data}
-        # print(data)
+    
 
         return query
 
 class Single_product(Resource):
     def get(self,product_id):
         single_product = Product.get_product_by_id(product_id)
-        print(single_product)
+    
         if not single_product:
             return make_response(jsonify({"message":"Product Does not exist"}),200)
         else:
