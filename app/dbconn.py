@@ -1,7 +1,8 @@
 import psycopg2
 import os
+from sys import modules
 from instance.config import app_config
-from app.queries import queries
+from app.queries import queries,drop_queries
 
 
 environment = os.environ['ENVIRONMENT']
@@ -10,11 +11,14 @@ url = os.getenv('DATABASE_URL')
 
 def Database_Connection():
 	try:
-
-		con = psycopg2.connect(app_config[environment].DATABASE_URL)
-		cur =con.cursor()
-		# conn = psycopg2.connect(app_configuration[enviroment].connectionVariables)
-		return con
+		if 'pytest' in modules:
+			connection = psycopg2.connect(
+                    host="localhost", user="postgres", dbname="store_test", password="root")
+			return connection
+		else:
+			con = psycopg2.connect(app_config[environment].DATABASE_URL)
+			cur =con.cursor()
+			return con
 		# return conn
 
 	except(Exception, psycopg2.DatabaseError) as error:
@@ -27,15 +31,12 @@ def create_tables():
 		cur= con.cursor()
 		for tables in queries:
 			cur.execute(tables)
-		print("Tables Created")
-	except (Exception,psycopg2.DatabaseError) as error:
-		print("Failed to connect", error)
-
-	finally:
 		cur.close()
 		con.commit()
+		print("Tables Created")
+	except(Exception,psycopg2.DatabaseError) as error:
+		print("Failed to connect", error)
 
-# def create_admin():
 	
 
 def drop_tables():

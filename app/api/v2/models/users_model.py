@@ -9,7 +9,7 @@ import psycopg2
 # from app.api.v2.views.users_views import User
 
 class Users:
-    def __init__(self,username,email,password,role):
+    def __init__(self,username=None,email=None,password=None,role=None):
         self.username=username
         self.email=email
         self.password=password
@@ -21,7 +21,7 @@ class Users:
         cur= con.cursor()
         cur.execute(query)
         db_users= cur.fetchall()
-        print(type(db_users))
+       
         if db_users:
             users = []
             for items in db_users:
@@ -55,6 +55,13 @@ class Users:
     def verify_hash(hash_password,password):
         return check_password_hash(hash_password,password)
 
+    def get_one_user(self):
+        con =Database_Connection()
+        cur=con.cursor()
+        n = cur.execute("SELECT id,email,names,role FROM users where email =%s",(email,))
+        print(n, "nnnnnnnnnnnnnnnnnnnn")
+        return n
+
     # @staticmethod
     # def fetch_by_role(role):
     #     if role:
@@ -74,8 +81,7 @@ class Users:
         cur=con.cursor()
         cur.execute("SELECT * FROM users WHERE email =%s", (email,))
         logged_in =cur.fetchone()
-        print("logged_in",logged_in[4])
-        print(type(logged_in))
+
         # if logged_in:
         #     user=[]
         #     for items in logged_in:
@@ -100,4 +106,24 @@ class Users:
             cur=con.cursor()
             cur.execute("SELECT * FROM users WHERE id ='%s';" % user_id)
             return  cur.fetchone()
-         
+    
+    def add_to_blacklist(self,token):
+        try:
+            con =Database_Connection()
+            cur=con.cursor()
+            cur.execute("INSERT INTO blacklists(token) VALUES(%s)",(token,))
+            con.commit()
+
+        except Exception as e:
+            print (e)
+
+    def check_blacklist(self,token):
+        try:
+            con =Database_Connection()
+            cur=con.cursor()
+            cur.execute("SELECT * FROM blacklists WHERE token  = %s",(token,))
+            return cur.fetchone()
+
+        except Exception as e:
+            raise
+        

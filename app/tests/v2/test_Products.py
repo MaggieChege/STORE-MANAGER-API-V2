@@ -2,7 +2,7 @@ import unittest
 import requests
 import pytest
 from app import create_app
-from instance.config import app_configuration
+from instance.config import app_config
 from flask import json
 from app.dbconn import *
 
@@ -48,7 +48,7 @@ class UserTestCase(unittest.TestCase):
         headers=dict(Authorization="Bearer " + token),
         content_type = 'application/json')
         response_data = json.loads(response.data)
-        self.assertEqual(response_data["message"],'Product successfully Added' )
+        self.assertEqual(response_data["message"],"Product successfully Added")
         self.assertEqual(response.status_code, 200)
 
     def test_empty_product(self):
@@ -67,8 +67,8 @@ class UserTestCase(unittest.TestCase):
 
         response_data = json.loads(response.data)
         print(response_data)
-        self.assertEqual(response_data["message"],"Product Name is required")
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response_data["message"],'All fields are required')
+        self.assertEqual(response.status_code, 400)
 
 
     
@@ -97,7 +97,16 @@ class UserTestCase(unittest.TestCase):
         headers=dict(Authorization="Bearer " + token),
         content_type = 'application/json'
         )
+    def test_get_products(self):
 
+        response = self.client.get(
+            'api/v2/products', content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+    def test_get_products_by_id(self):
+
+        response = self.client.get(
+            'api/v2/products/1', content_type='application/json')
+        self.assertEqual(response.status_code, 200)
 
     def test_delete_product(self):
         """This method tests the method for deleting a product.
