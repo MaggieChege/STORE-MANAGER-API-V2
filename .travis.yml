@@ -10,6 +10,9 @@ services:
 
   - postgres
 
+before_install:
+export PYTHONPATH=${PYTHONPATH}:/home/travis/build/MaggieChege/STORE-MANAGER-API-V2/
+
 install:    
 
   
