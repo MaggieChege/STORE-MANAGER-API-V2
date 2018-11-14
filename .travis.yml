@@ -18,15 +18,12 @@ install:
   - pip install coverage
   - pip install coveralls
   
-  
-
- 
 
 before_script:
 
 
   - psql -c "create database store;" -U postgres
-
+cache: pip 
 
 script:    
 
@@ -41,3 +38,14 @@ after_success:
  - codeclimate-test-reporter
 
 cache: pip 
+before_script:
+ - cp env.example .env
+ - psql -c 'create database teststore;' -U postgres
+script:
+ - coverage run --source=app -m pytest && coverage report 
+
+after_script:
+ - coveralls 
+ - codeclimate-test-reporter
+after_success:
+- coveralls
