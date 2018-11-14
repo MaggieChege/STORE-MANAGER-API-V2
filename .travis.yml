@@ -27,7 +27,7 @@ cache: pip
 
 script:    
 
-  - coverage run --source=app -m pytest && coverage report
+#   - coverage run --source=app -m pytest && coverage report
 
  
 
