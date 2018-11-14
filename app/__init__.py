@@ -1,6 +1,6 @@
 from flask import Flask,Blueprint
 from app.dbconn import create_tables
-from flask_jwt_extended import JWTManager,get_raw_jwt
+# from flask_jwt_extended import JWTManager,get_raw_jwt
 from instance.config import app_config 
 from flask_cors import CORS
 from app.api.v2.models.users_model import *
@@ -32,12 +32,12 @@ def create_app(config_name):
     #     '''This methods adds claims from logged_user'''
     #     return {'role': logged_user['role'],'user':logged_user['id']}
 
-    @jwt.expired_token_loader
-    def expired_handler():
-        return jsonify({
-            "Message": "Token has expired"
+#     @jwt.expired_token_loader
+#     def expired_handler():
+#         return jsonify({
+#             "Message": "Token has expired"
 
-            })
+#             })
     @jwt.token_in_blacklist_loader
     def check_blacklist(decrypted_token):
         '''check if token is in black list'''
