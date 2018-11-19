@@ -10,6 +10,15 @@ from flask_expects_json import expects_json
 class Products(Resource):
     
     def get(self):
+        qua=Product.get_total_products(self)
+        for a in qua:
+            print(a)
+        # m = a[0]
+        # print(m)
+
+        # int(a)
+        # n =sum(a)
+        # print(n)
         dd =Product.get_product(self)
 
         if not dd:
@@ -52,8 +61,9 @@ class Products(Resource):
 
 
 
-        if type((request.json['price']) or (request.json(quantity))) not in[int or float]:
-            return{"message": "Must be a Number"}
+
+        if type((data['price']) and (data['quantity'])) not in[int]:
+            return {"message": "Must be a Number"}
 
         con =Database_Connection()
         cur=con.cursor()
@@ -65,7 +75,7 @@ class Products(Resource):
         return make_response(jsonify({'product':product}),201)
 
 
-class DeleteProd(Resource):
+class DeleteProduct(Resource):
     
     @jwt_required
     @admin_required
@@ -74,7 +84,7 @@ class DeleteProd(Resource):
         Product.delete_product(product_id)
         return {"message":"Deleted successfully"}
 
-class Products_update(Resource):
+class ProductsUpdate(Resource):
     @jwt_required
     @admin_required
     @expects_json(products_schema)
@@ -92,7 +102,7 @@ class Products_update(Resource):
 
         return query
 
-class Single_product(Resource):
+class SingleProduct(Resource):
     def get(self,product_id):
         single_product = Product.get_product_by_id(product_id)
     

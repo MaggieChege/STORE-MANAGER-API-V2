@@ -20,7 +20,6 @@ def admin_required(f):
         token = None
         if 'access_token' in request.headers:
             token = request.headers['access_token']
-            print(request.headers)
         elif token:
             return make_response(jsonify({
                 "message": "Token is required"
@@ -38,15 +37,14 @@ def admin_required(f):
 
     return decorator_func
 
-# try:
-#     pass
-# except Exception as e:
-#     raise
-# else:
-#     pass
-# finally:
-#     pass
-
+class AllUsers(Resource):
+    def get(self):
+        all_users =Users.get_users(self)
+        if not all_users:
+            return make_response(jsonify({"message":"No Users Found"}),404)
+        return make_response(jsonify({"Users":all_users,"status":"okay"}),200)
+    
+        return all_users
 class UserRegistration(Resource):
     @jwt_required
     @admin_required
@@ -112,14 +110,14 @@ class UserLogin(Resource):
         cur.execute(query)
         dbusers= cur.fetchall()
      
-        # print(dbusers[0][0])
         if len(dbusers) == 0:
             return {"message": "User does not exist"},404
         else:
+            user = Users.fetch_by_email(email)
             user2 =(email,password)
             print(user2,"user2")
             if Users.verify_hash(dbusers[0][0],password) == True:
-                exp=datetime.timedelta(minutes=30)
+                exp=datetime.timedelta(minutes=1)
                 # logged_user = user2.get_one_user()
                 # names = logged_user["names"]
                 # role = logged_user["role"]
@@ -131,7 +129,7 @@ class UserLogin(Resource):
                 'message': 'User was logged in succesfully',
                 'status': 'ok',
                 'access_token': access_token,
-                # 'refresh_token': refresh_token
+                "role": user,
                 }, 200
             else:
                 return {'message': 'Wrong credentials'},400

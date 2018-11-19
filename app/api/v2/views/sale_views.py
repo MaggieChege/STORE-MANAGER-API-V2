@@ -12,13 +12,7 @@ from flask_expects_json import expects_json
 from functools import wraps
 from app.__init__ import *
 
-@jwt.expired_token_loader
-def my_expired_token_callback():
-    return jsonify({
-        'status': 401,
-        'sub_status': 42,
-        'msg': 'The token has expired'
-    }), 401
+
 class Sales(Resource):
     def get(self):
         sales = Sale.get_sales(self)
@@ -26,7 +20,7 @@ class Sales(Resource):
             return make_response(jsonify({"message": "No sale record found"}))
         return make_response(jsonify({"sales":sales}),201)
 
-    @jwt_required
+    # @jwt_required
     def post(self):
         data =request.get_json()
         # sale_id = data['sale_id']
@@ -57,7 +51,7 @@ class Sales(Resource):
         if remaining_quantity < 0:
             return {"message": "Not enough in stock"}
 
-        newsale = Sale(product_id,quantity,remaining_quantity,price,product_name,attendant,date_created).create_sale()
+        newsale = Sale(product_id,quantity,remaining_quantity,price,product_name,attendant,total_sale,date_created).create_sale()
        
         Sale.decrease_quantity(product_id,remaining_quantity)
         
@@ -75,7 +69,7 @@ class DeleteSale(Resource):
     
 
 
-class Get_sale_id(Resource):
+class GetSaleId(Resource):
     def get(self,sale_id):
         
         sal = [sale for sale in sales if sale['sale_id'] == sale_id] or None

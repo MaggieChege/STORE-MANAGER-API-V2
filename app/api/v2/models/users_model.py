@@ -59,20 +59,9 @@ class Users:
         con =Database_Connection()
         cur=con.cursor()
         n = cur.execute("SELECT id,email,names,role FROM users where email =%s",(email,))
-        print(n, "nnnnnnnnnnnnnnnnnnnn")
         return n
 
-    # @staticmethod
-    # def fetch_by_role(role):
-    #     if role:
-    #         "Fetch a user through email"
-    #         con =Database_Connection()
-    #         cur=con.cursor()
-    #         cur.execute("SELECT * FROM users WHERE role =%s", (role,))
-    #         selected_user = cur.fetchone()
-    #         print(selected_user)
-    #         return selected_user[4]
-
+  
 
     @staticmethod
     def fetch_by_email(email):
@@ -81,18 +70,8 @@ class Users:
         cur=con.cursor()
         cur.execute("SELECT * FROM users WHERE email =%s", (email,))
         logged_in =cur.fetchone()
-
-        # if logged_in:
-        #     user=[]
-        #     for items in logged_in:
-        #         item ={
-        #         'id':items[0],           
-        #         'username':items[1],
-        #         'email':items[2],
-        #         'password':items[3],
-        #         'role':items[4]
-        #         }
-        #         user.append(item)
+        if not logged_in:
+            return jsonify("No user logged_in")
         return logged_in[4]
             
 

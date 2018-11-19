@@ -45,7 +45,7 @@ class Product():
         con=Database_Connection()
         cur= con.cursor()
         query = "DELETE FROM products where product_id = %s;"
-        update =cur.execute(query, (str(product_id)))
+        update =cur.execute(query, (str(product_id),))
         con.commit()
         return query
 
@@ -60,7 +60,7 @@ class Product():
     def get_product_by_id(product_id):
         con=Database_Connection()
         cur= con.cursor()
-        cur.execute("SELECT * FROM products WHERE product_id = %s", (product_id,))
+        cur.execute("SELECT * FROM products WHERE product_id = (%s)", (product_id,))
         product = cur.fetchall()
        
 
@@ -84,3 +84,16 @@ class Product():
         productname = cur.fetchone()
         return productname
        
+    def get_total_products(quantity):
+        con=Database_Connection()
+        cur= con.cursor()
+        cur.execute("SELECT quantity FROM products")
+        quantity = cur.fetchall()
+        if quantity:
+            prods = []
+            for items in quantity:
+                item ={
+                items[0]}
+                prods.append(item)
+        print(type(prods))
+        return prods

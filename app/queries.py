@@ -22,6 +22,7 @@ sales = '''CREATE TABLE IF NOT EXISTS sales(
         price INT NOT NULL,
         product_name varchar(50),
         attendant varchar(50),
+        total_sale INT,
         date_created TIMESTAMP,
         FOREIGN KEY (product_id) REFERENCES products(product_id)
         );'''

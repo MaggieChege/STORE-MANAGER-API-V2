@@ -30,4 +30,3 @@ app_config={
 	"production":ProductionConfig
 }
 
-# secret_key = Config.SECRET

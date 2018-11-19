@@ -17,8 +17,9 @@ products_schema={
         
         "product_name": {type: "string"},
         "category": {type: "string"},
-        "price": {type: "string"},
-        "quantity": {type: "integer"},
+        "price": {type:"number"},
+        "quantity": {type: "number"}
+
         
     },
 "required": ["product_name","category","price","quantity"]
