@@ -121,7 +121,7 @@ class UserLogin(Resource):
                 # logged_user = user2.get_one_user()
                 # names = logged_user["names"]
                 # role = logged_user["role"]
-                access_token = create_access_token(identity =email)
+                access_token = create_access_token(identity =email, expires_delta =False)
 
 
                 # refresh_token = create_refresh_token(identity = email)

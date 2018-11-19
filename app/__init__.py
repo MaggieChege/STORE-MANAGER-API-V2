@@ -7,7 +7,7 @@ from app.api.v2.models.users_model import *
 from flask_restful import Api,Resource
 
 # from app.api.v2.views.products_views import Products,Get_product_id
-from app.api.v2.views.products_views import Products,DeleteProd,Products_update,Single_product
+from app.api.v2.views.products_views import Products,DeleteProduct,ProductsUpdate,SingleProduct
 from app.api.v2.views.sale_views import *
 # Sales,Get_sale_id,DeleteSale
 from app.api.v2.views.users_views import UserRegistration,UserLogin,Logout,AllUsers
