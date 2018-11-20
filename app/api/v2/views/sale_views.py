@@ -25,17 +25,19 @@ class Sales(Resource):
         # sale_id = data['sale_id']
         user_email = get_jwt_identity()
         user=Users.fetch_by_email(user_email)
-        product_name= data['product_name']
+        product_id= data['product_id']
         quantity = data['quantity']
         attendant=data['attendant']
 
-        if not product_name or not quantity or not attendant:
+        if not product_id or not quantity or not attendant:
             return {"message": "All fields are required"},400
 
 
        
 
-        product=Product.get_product_name(product_name)
+        product=Product.get_product_by_id(product_id)
+        print("product",product)
+        # print(product['quantity'])
         if not product:
             return {"message": "No product found"},404
 
@@ -50,7 +52,7 @@ class Sales(Resource):
         if remaining_quantity < 0:
             return {"message": "Not enough in stock"}
 
-        newsale = Sale(product_id,quantity,remaining_quantity,price,product_name,attendant,total_sale,date_created).create_sale()
+        newsale = Sale(product_id,quantity,remaining_quantity,price,attendant,total_sale,date_created).create_sale()
        
         Sale.decrease_quantity(product_id,remaining_quantity)
         

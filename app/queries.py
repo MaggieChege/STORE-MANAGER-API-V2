@@ -20,7 +20,6 @@ sales = '''CREATE TABLE IF NOT EXISTS sales(
         quantity INT NOT NULL,
         remaining_quantity INT NOT NULL,
         price INT NOT NULL,
-        product_name varchar(50),
         attendant varchar(50),
         total_sale INT,
         date_created TIMESTAMP,
@@ -28,7 +27,7 @@ sales = '''CREATE TABLE IF NOT EXISTS sales(
         );'''
 blacklist = '''CREATE TABLE IF NOT EXISTS blacklists(
 			id  SERIAL PRIMARY KEY,
-             token VARCHAR(500) NOT NULL,
+             access_token VARCHAR(500) NOT NULL,
              date_created  DATE
 				)'''
 create_admin =''' INSERT INTO users(username,email,password,role) VALUES('admin','higi@gmail.com','pbkdf2:sha256:50000$eKWEMRmn$02f208bd4c19b95fee6ec7627190f613934d645ee890d1f185b6db5bf0dd8b80','Admin')

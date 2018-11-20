@@ -85,21 +85,21 @@ class Users:
             cur.execute("SELECT * FROM users WHERE id ='%s';" % user_id)
             return  cur.fetchone()
     
-    def add_to_blacklist(self,token):
+    def add_to_blacklist(self,access_token):
         try:
             con =Database_Connection()
             cur=con.cursor()
-            cur.execute("INSERT INTO blacklists(token) VALUES(%s)",(token,))
+            cur.execute("INSERT INTO blacklists(access_token) VALUES(%s)",(access_token,))
             con.commit()
 
         except Exception as e:
             print (e)
 
-    def check_blacklist(self,token):
+    def check_blacklist(self,access_token):
         try:
             con =Database_Connection()
             cur=con.cursor()
-            cur.execute("SELECT * FROM blacklists WHERE token  = %s",(token,))
+            cur.execute("SELECT * FROM blacklists WHERE access_token  = %s",(access_token,))
             return cur.fetchone()
 
         except Exception as e:

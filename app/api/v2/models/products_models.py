@@ -60,23 +60,25 @@ class Product():
     def get_product_by_id(product_id):
         con=Database_Connection()
         cur= con.cursor()
-        cur.execute("SELECT * FROM products WHERE product_id = (%s)", (product_id,))
-        product = cur.fetchall()
+        cur.execute("SELECT * FROM products WHERE product_id =%s", (product_id,))
+        print("iddddddddddd",product_id)
+        product = cur.fetchone()
+        return product
        
 
-        if product:
-            prods = []
-            for items in product:
-                item ={
-                'product_id':items[0],
-                'product_name':items[1],
-                'category':items[2],
-                'price':items[3],
-                'quantity':items[4]
-                }
-                prods.append(item)
+        # if product:
+        #     prods = []
+        #     for items in product:
+        #         item ={
+        #         'product_id':items[0],
+        #         'product_name':items[1],
+        #         'category':items[2],
+        #         'price':items[3],
+        #         'quantity':items[4]
+        #         }
+        #         prods.append(item)
 
-            return prods
+            
     def get_product_name(product_name):
         con=Database_Connection()
         cur= con.cursor()

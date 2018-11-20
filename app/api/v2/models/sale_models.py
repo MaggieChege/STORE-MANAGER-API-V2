@@ -5,22 +5,22 @@ from app.dbconn import Database_Connection
 # sales =[]
 class Sale():
 
-    def __init__(self, product_id, quantity, remaining_quantity, price, product_name,attendant, total_sale,date_created):
+    def __init__(self, product_id, quantity, remaining_quantity, price,attendant, total_sale,date_created):
         self.product_id = product_id
         self.quantity = quantity
         self.remaining_quantity = remaining_quantity
         self.price = price
-        self.product_name = product_name
+        # self.product_name = product_name
         self.attendant=attendant
         self.total_sale=total_sale
         self.date_created = date_created
  
     def create_sale(self):
-        sale={"product_id":self.product_id,"quantity":self.quantity,"remaining_quantity":self.remaining_quantity,"price":self.price,"product_name":self.product_name, "attendant":self.attendant,"total_sale":self.total_sale,"date_created":self.date_created}
+        sale={"product_id":self.product_id,"quantity":self.quantity,"remaining_quantity":self.remaining_quantity,"price":self.price,"attendant":self.attendant,"total_sale":self.total_sale,"date_created":self.date_created}
         try:
             con=Database_Connection()
             cur= con.cursor()
-            data = cur.execute("INSERT INTO sales(product_id, quantity, remaining_quantity, price, product_name,attendant,total_sale,date_created) VALUES('{}','{}','{}','{}','{}','{}','{}','{}');".format(self.product_id,self.quantity,self.remaining_quantity,self.price,self.product_name, self.attendant,self.total_sale,self.date_created))
+            data = cur.execute("INSERT INTO sales(product_id, quantity, remaining_quantity, price,attendant,total_sale,date_created) VALUES('{}','{}','{}','{}','{}','{}','{}');".format(self.product_id,self.quantity,self.remaining_quantity,self.price,self.attendant,self.total_sale,self.date_created))
             
             con.commit()
         except Exception as e:

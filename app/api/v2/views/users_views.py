@@ -30,7 +30,7 @@ class UserRegistration(Resource):
         claims = get_jwt_claims()
         if claims['role'] != 'Admin':
             return {"message":"Must be logged in as Admin"}
-            
+
         data = request.get_json()
         username=data['username']
         email = data['email']
@@ -96,14 +96,14 @@ class UserLogin(Resource):
             user = Users.fetch_by_email(email)
 
             if Users.verify_hash(dbusers[0][0],password) == True:
-                exp=datetime.timedelta(minutes=1)
+                exp=datetime.timedelta(minutes=60)
 
-                access_token = create_access_token(identity =user, expires_delta=exp)
+                access_token = create_access_token(identity=user, expires_delta=exp)
                 return {
                 'message': 'User was logged in succesfully',
                 'status': 'ok',
                 'access_token': access_token,
-                "role": user,
+                "role": user[4],
                 }, 200
             else:
                 return {'message': 'Wrong credentials'},400
