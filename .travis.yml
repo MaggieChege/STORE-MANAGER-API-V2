@@ -26,13 +26,14 @@ before_script:
 
 
   - psql -c "create database store;" -U postgres
+
+  - psql -c "ALTER USER postgres WITH PASSWORD 'root';" -U postgres
+env:
+  - DATABASE_URL= "dbname='store_test' host='localhost' port='5432' user='postgres' password='root'"
+
 cache: pip 
 
-script:    
 
-#   - coverage run --source=app -m pytest && coverage report
-
- 
 
 after_success:
 
@@ -40,10 +41,7 @@ after_success:
 
  - codeclimate-test-reporter
 
-cache: pip 
-before_script:
- 
- - psql -c 'create database store_test;' -U postgres
+
 script:
 
 - coverage run --source=app -m pytest && coverage report
