@@ -14,6 +14,10 @@ install:
 
 before_script:
   - psql -c "create database store;" -U postgres
+  - psql -c "ALTER USER postgres WITH PASSWORD 'root';" -U postgres
+
+env:
+- DATABASE_URL= "dbname='store_test' host='localhost' port='5432' user='postgres' password='root'"
 
 script:    
 
