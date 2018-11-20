@@ -4,7 +4,6 @@ from flask_restful import Resource
 from app.dbconn import Database_Connection
 from app.api.v2.models.sale_models import Sale
 from app.api.v2.views.products_views import Product
-from app.api.v2.views.users_views import admin_required
 from app.api.v2.models.users_model import Users
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 from app.api.v2.utils.schemas import sales_schema
@@ -62,7 +61,6 @@ class Sales(Resource):
 
 class DeleteSale(Resource):
     @jwt_required
-    @admin_required
     def delete(self,sale_id):
         Sale.delete_product(sale_id)
         return {"message":"Deleted successfully"}

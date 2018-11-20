@@ -14,29 +14,6 @@ from app import dbconn
 
 
 
-def admin_required(f): 
-    @wraps(f)
-    def decorator_func(*args,**kwargs):
-        token = None
-        if 'access_token' in request.headers:
-            token = request.headers['access_token']
-        elif token:
-            return make_response(jsonify({
-                "message": "Token is required"
-                }),499)
-        try:
-            user = Users.fetch_by_email(get_jwt_identity())
-            
-            if not user ==  "Admin":
-                return{"message":"You must be logged in as Admin "},403
-            else:
-                return f(*args,**kwargs)
-        except Exception as e:
-            print(e)
-            # raise ExpiredSignatureError('Signature has expired')
-
-    return decorator_func
-
 class AllUsers(Resource):
     def get(self):
         all_users =Users.get_users(self)
@@ -47,10 +24,13 @@ class AllUsers(Resource):
         return all_users
 class UserRegistration(Resource):
     @jwt_required
-    @admin_required
     @expects_json(user_schema)
     def post(self):
 
+        claims = get_jwt_claims()
+        if claims['role'] != 'Admin':
+            return {"message":"Must be logged in as Admin"}
+            
         data = request.get_json()
         username=data['username']
         email = data['email']
@@ -114,17 +94,11 @@ class UserLogin(Resource):
             return {"message": "User does not exist"},404
         else:
             user = Users.fetch_by_email(email)
-            user2 =(email,password)
-            print(user2,"user2")
+
             if Users.verify_hash(dbusers[0][0],password) == True:
                 exp=datetime.timedelta(minutes=1)
-                # logged_user = user2.get_one_user()
-                # names = logged_user["names"]
-                # role = logged_user["role"]
-                access_token = create_access_token(identity =email, expires_delta =False)
 
-
-                # refresh_token = create_refresh_token(identity = email)
+                access_token = create_access_token(identity =user, expires_delta=exp)
                 return {
                 'message': 'User was logged in succesfully',
                 'status': 'ok',

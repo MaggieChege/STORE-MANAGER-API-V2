@@ -47,11 +47,7 @@ def create_app(config_name):
     app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']
 
 
-    @jwt.expired_token_loader
-    def my_expired_token_callback():
-        return jsonify({
-            'message': 'The token has expired'
-        }), 401
+
     @jwt.token_in_blacklist_loader
     def check_blacklist(decrypted_token):
         '''check if token is in black list'''
@@ -60,7 +56,28 @@ def create_app(config_name):
         return revoked_tokens.check_blacklist(token)
 
 
+    @jwt.user_identity_loader
+    def user_identity_lookup(user):
+        return user[2]
 
+    @jwt.user_claims_loader
+    def user_claims_check(user):
+        return {'role':user[4]}
+
+
+    @jwt.expired_token_loader
+    def my_expired_token_callback():
+        return jsonify({
+            'message': 'The token has expired'
+        }), 401
+
+    @jwt.expired_token_loader
+    def my_expired_token_callback():
+        return jsonify({
+            'status': 401,
+            'sub_status': 42,
+            'msg': 'The token has expired'
+        }), 401
 
 
     @app.errorhandler(404)

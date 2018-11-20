@@ -72,8 +72,7 @@ class Users:
         logged_in =cur.fetchone()
         if not logged_in:
             return jsonify("No user logged_in")
-        return logged_in[4]
-            
+        return logged_in
 
        
 

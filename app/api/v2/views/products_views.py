@@ -3,8 +3,8 @@ from flask_restful import Resource
 from app.dbconn import Database_Connection
 from app.api.v2.models.products_models import Product
 from app.api.v2.models.users_model import Users
-from app.api.v2.views.users_views import admin_required
-from flask_jwt_extended import jwt_required, get_jwt_identity
+# from app.api.v2.views.users_views import admin_required
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt_claims
 from app.api.v2.utils.schemas import products_schema
 from flask_expects_json import expects_json
 class Products(Resource):
@@ -27,9 +27,18 @@ class Products(Resource):
     
 
     @jwt_required
-    @admin_required
-    @expects_json(products_schema)
+    # @expects_json(products_schema)
     def post(self):
+
+        logged_in = get_jwt_identity()
+        print(logged_in)
+
+        claims = get_jwt_claims()
+        if claims['role'] != 'Admin':
+            return {"message":"Must be logged in as Admin"}
+
+
+
         data = request.get_json()
         product_name =data['product_name']
         category = data['category']
@@ -78,7 +87,6 @@ class Products(Resource):
 class DeleteProduct(Resource):
     
     @jwt_required
-    @admin_required
     def delete(self,product_id):
         # db_products =Product.get_product(self)
         Product.delete_product(product_id)
@@ -86,7 +94,6 @@ class DeleteProduct(Resource):
 
 class ProductsUpdate(Resource):
     @jwt_required
-    @admin_required
     @expects_json(products_schema)
     def put(self,product_id):
         data = request.get_json()
