@@ -88,6 +88,10 @@ class DeleteProduct(Resource):
     
     @jwt_required
     def delete(self,product_id):
+        claims = get_jwt_claims()
+        if claims['role'] != 'Admin':
+            return {"message":"Must be logged in as Admin"}
+
         # db_products =Product.get_product(self)
         Product.delete_product(product_id)
         return {"message":"Deleted successfully"}
@@ -96,6 +100,10 @@ class ProductsUpdate(Resource):
     @jwt_required
     @expects_json(products_schema)
     def put(self,product_id):
+        claims = get_jwt_claims()
+        if claims['role'] != 'Admin':
+            return {"message":"Must be logged in as Admin"}
+
         data = request.get_json()
         # prod_id = data["product_id"]
         product_name = data["product_name"]

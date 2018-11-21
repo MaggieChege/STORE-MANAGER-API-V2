@@ -29,7 +29,7 @@ class UserRegistration(Resource):
 
         claims = get_jwt_claims()
         if claims['role'] != 'Admin':
-            return {"message":"Must be logged in as Admin"}
+            return {"message":"Must be logged in as Admin"},403
 
         data = request.get_json()
         username=data['username']

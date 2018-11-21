@@ -17,7 +17,7 @@ class Product():
     def create_product(self):
         try:
             product={"product_name":self.product_name,"category":self.category,"price":self.price,"quantity":self.quantity}
-            return {"message": "Product successfully Added"}
+            return {"message": "Product successfully Added"},201
             return product
         except Exception as e:
             print(e)
