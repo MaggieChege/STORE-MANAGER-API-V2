@@ -64,6 +64,10 @@ class Sales(Resource):
 class DeleteSale(Resource):
     @jwt_required
     def delete(self,sale_id):
+        claims = get_jwt_claims()
+        if claims['role'] != 'Admin':
+            return {"message":"Must be logged in as Admin"}
+
         Sale.delete_product(sale_id)
         return {"message":"Deleted successfully"}
     
