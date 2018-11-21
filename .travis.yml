@@ -13,7 +13,8 @@ install:
   - pip install coveralls
 
 script:
-- nosetests
+  - coverage run --source app,tests,instance -m pytest
+  - python -m coverage report -m
 
 before_script:
   - psql -c "create database store;" -U postgres

@@ -11,14 +11,14 @@ url = os.getenv('DATABASE_URL')
 
 def Database_Connection():
 	try:
-		if 'pytest' in modules:
-			connection = psycopg2.connect(
-                    host="localhost", user="postgres", dbname="store_test", password="root")
-			return connection
-		else:
-			con = psycopg2.connect(app_config[environment].DATABASE_URL)
-			cur =con.cursor()
-			return con
+		# if 'pytest' in modules:
+		# 	connection = psycopg2.connect(
+  #                   host="localhost", user="postgres", dbname="store_test", password="root")
+		# 	return connection
+		# else:
+		con = psycopg2.connect(app_config[environment].DATABASE_URL)
+		cur =con.cursor()
+		return con
 		# return conn
 
 	except(Exception, psycopg2.DatabaseError) as error:
