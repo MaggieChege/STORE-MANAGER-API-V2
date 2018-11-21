@@ -1,52 +1,30 @@
 language: python
 
 python:    
-
  - "3.6"
 
- 
-
 services:
-
   - postgres
 
-before_install:
-export PYTHONPATH=${PYTHONPATH}:/home/travis/build/MaggieChege/STORE-MANAGER-API-V2/
-
 install:    
-
-  
   - pip install -r requirements.txt
   - pip install codeclimate-test-reporter
   - pip install coverage
   - pip install coveralls
-  
-
-before_script:
-
-
-  - psql -c "create database store;" -U postgres
-
-  - psql -c "ALTER USER postgres WITH PASSWORD 'root';" -U postgres
-env:
-  - DATABASE_URL= "dbname='store_test' host='localhost' port='5432' user='postgres' password='root'"
-
-cache: pip 
-
-
-
-after_success:
-
- - coveralls
-
- - codeclimate-test-reporter
-
 
 script:
+  - coverage run --source app,tests,instance -m pytest
+  - python -m coverage report -m
 
-- coverage run --source=app -m pytest && coverage report
+before_script:
+  - psql -c "create database store;" -U postgres
+  - psql -c "ALTER USER postgres WITH PASSWORD 'root';" -U postgres
 
- - coveralls 
- - codeclimate-test-reporter
+env:
+- DATABASE_URL= "dbname='store_test' host='localhost' port='5432' user='postgres' password='root'"
+ 
 after_success:
-- coveralls
+ - coveralls
+ - codeclimate-test-reporter
+
+cache: pip 

@@ -5,6 +5,7 @@ from instance.config import app_config
 from flask_cors import CORS
 from app.api.v2.models.users_model import *
 from flask_restful import Api,Resource
+from datetime import timedelta
 
 # from app.api.v2.views.products_views import Products,Get_product_id
 from app.api.v2.views.products_views import Products,DeleteProduct,ProductsUpdate,SingleProduct
@@ -45,6 +46,7 @@ def create_app(config_name):
     app.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
     app.config['JWT_BLACKLIST_ENABLED'] = True
     app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access']
+    # app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(hours=72)
 
 
 
