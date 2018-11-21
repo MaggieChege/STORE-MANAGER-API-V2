@@ -49,7 +49,7 @@ class UserTestCase(unittest.TestCase):
         content_type = 'application/json')
         response_data = json.loads(response.data)
         # self.assertEqual(response_data["message"],'All fields are required')
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 201)
 
     def test_empty_product(self):
         response = self.client.post(
