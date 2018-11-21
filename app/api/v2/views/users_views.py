@@ -96,7 +96,7 @@ class UserLogin(Resource):
             user = Users.fetch_by_email(email)
 
             if Users.verify_hash(dbusers[0][0],password) == True:
-                exp=datetime.timedelta(minutes=60)
+                exp=datetime.timedelta(hours=72)
 
                 access_token = create_access_token(identity=user, expires_delta=exp)
                 return {
