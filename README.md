@@ -3,6 +3,8 @@
 
 [![Coverage Status](https://coveralls.io/repos/github/MaggieChege/STORE-MANAGER-API-V2/badge.svg?branch=develop)](https://coveralls.io/github/MaggieChege/STORE-MANAGER-API-V2?branch=develop)
 
+[![Coverage Status](https://coveralls.io/repos/github/MaggieChege/STORE-MANAGER-API-V2/badge.svg?branch=develop)](https://coveralls.io/github/MaggieChege/STORE-MANAGER-API-V2?branch=develop)
+
 
 # STORE-MANAGER-API-V2
 This is Version 2 of Store Manager application. This web application stores enables the admin or attendant to make a sale and to add products that they would like to sell in their store.
