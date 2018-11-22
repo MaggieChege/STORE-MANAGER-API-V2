@@ -66,7 +66,7 @@ class Products(Resource):
         if dd:
             new = [product for product in dd if product["product_name"] == product_name]
             if new:
-                print({"message": "Product exists"})
+                return({"message": "Product exists"})
 
 
 
