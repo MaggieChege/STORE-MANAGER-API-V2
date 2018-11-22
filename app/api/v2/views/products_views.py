@@ -27,7 +27,7 @@ class Products(Resource):
     
 
     @jwt_required
-    # @expects_json(products_schema)
+    @expects_json(products_schema)
     def post(self):
 
         logged_in = get_jwt_identity()
@@ -35,7 +35,7 @@ class Products(Resource):
 
         claims = get_jwt_claims()
         if claims['role'] != 'Admin':
-            return {"message":"Must be logged in as Admin"}
+             message = {"message":"Must be logged in as Admin"}
 
 
 
@@ -45,19 +45,20 @@ class Products(Resource):
         price = data['price']
         quantity = data['quantity']
         
-        # if not product_name or not category or not price or not quantity:
-        #     print( make_response(jsonify({
-        #         "message": "All fields are required"
-        #         }),400))
+        if not product_name or not category or not price or not quantity:
+            message = ( make_response(jsonify({
+                "message": "All fields are required"
+                }),400))
 
         if not product_name or product_name == "":
-            print({"message":"Product Name is required"}) 
+            message = {"message":"Product Name is required"}
         if not category or category == "":
-            print({"message":"Product Name is required"})
+            message = {"message":"Product Name is required"}
         if not price or price == "":
-            return {"message":"Product Name is required"}
+           message = {"message":"Price is required"}
         if not quantity or quantity == "":
-            return {"message":"Product Name is required"}
+            message = {"message":"Quantity is required"}
+            return message
 
 
 
