@@ -22,10 +22,7 @@ class UserTestCase(unittest.TestCase):
                 "attendant":"Trump"
                 
                 }
-        # self.test_empty_product_name={"product_name":"",
-        #                 "quantity":2,
-        #         "attendant":"Trump"
-        #         }
+       
         self.test_empty_quantity={"product_id":3,
                         "quantity": 0,
                 "attendant":"Trump"
@@ -43,26 +40,6 @@ class UserTestCase(unittest.TestCase):
                 "attendant":"Trump"
                 }
 
- 
-        
-
-    # def test_create_sale(self):
-    #     response = self.client.post(
-    #     '/api/v2/users/login',
-    #     data = json.dumps(self.login_user),
-    #     content_type = 'application/json'
-    #     )
-    #     token = json.loads(response.data.decode())['access_token']
-
-    #     # #test product has been added
-    #     response = self.client.post(
-    #     '/api/v2/sales',
-    #     data = json.dumps(self.test_sale),
-    #     headers=dict(Authorization="Bearer " + token),
-    #     content_type = 'application/json')
-    #     response_data = json.loads(response.data)
-    #     # self.assertEqual(response_data["message"], "Sale record created successfully")
-    #     self.assertEqual(response.status_code, 201)
     def test_get_sales(self):
 
         response = self.client.get(
@@ -70,24 +47,6 @@ class UserTestCase(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
 
 
-    # def test_empty_product_name(self):
-    #     response = self.client.post(
-    #     '/api/v2/users/login',
-    #     data = json.dumps(self.login_user),
-    #     content_type = 'application/json'
-    #     )
-    #     token = json.loads(response.data.decode())['access_token']
-
-    #     # #test product has been added
-    #     response = self.client.post(
-    #     '/api/v2/sales',
-    #     data = json.dumps(self.test_empty_product_name),
-    #     headers=dict(Authorization="Bearer " + token),
-    #     content_type = 'application/json')
-    #     response_data = json.loads(response.data)
-    #     self.assertEqual(response_data["message"], 'All fields are required')
-    #     self.assertEqual(response.status_code, 400)
-   
     def test_empty_attendant(self):
         response = self.client.post(
         '/api/v2/users/login',
@@ -123,20 +82,4 @@ class UserTestCase(unittest.TestCase):
         self.assertEqual(response_data["message"], 'No product found')
         self.assertEqual(response.status_code, 404)
 
-    # def test_sale_excess_products(self):
-    #     response = self.client.post(
-    #     '/api/v2/users/login',
-    #     data = json.dumps(self.login_user),
-    #     content_type = 'application/json'
-    #     )
-    #     token = json.loads(response.data.decode())['access_token']
-
-    #     # #test product has been added
-    #     response = self.client.post(
-    #     '/api/v2/sales',
-    #     data = json.dumps(self.test_sale_excess_products),
-    #     headers=dict(Authorization="Bearer " + token),
-    #     content_type = 'application/json')
-    #     response_data = json.loads(response.data)
-    #     self.assertEqual(response_data["message"], "Not enough in stock")
-    #     self.assertEqual(response.status_code, 200)
+ 
