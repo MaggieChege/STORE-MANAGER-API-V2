@@ -45,15 +45,15 @@ class Products(Resource):
         price = data['price']
         quantity = data['quantity']
         
-        if not product_name or not category or not price or not quantity:
-            return make_response(jsonify({
-                "message": "All fields are required"
-                }),400)
+        # if not product_name or not category or not price or not quantity:
+        #     print( make_response(jsonify({
+        #         "message": "All fields are required"
+        #         }),400))
 
         if not product_name or product_name == "":
-            return {"message":"Product Name is required"}
+            print({"message":"Product Name is required"}) 
         if not category or category == "":
-            return {"message":"Product Name is required"}
+            print({"message":"Product Name is required"})
         if not price or price == "":
             return {"message":"Product Name is required"}
         if not quantity or quantity == "":
@@ -65,7 +65,7 @@ class Products(Resource):
         if dd:
             new = [product for product in dd if product["product_name"] == product_name]
             if new:
-                return {"message": "Product exists"}
+                print({"message": "Product exists"})
 
 
 
