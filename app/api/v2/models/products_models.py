@@ -96,8 +96,7 @@ class Product():
         if quantity:
             prods = []
             for items in quantity:
-                item ={
-                items[0]}
+                item ={items[0]}
             prods.append(item)
-        print(type(prods))
+            print(type(prods))
         return prods
