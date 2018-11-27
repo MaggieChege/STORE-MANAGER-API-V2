@@ -10,9 +10,9 @@ from flask_expects_json import expects_json
 class Products(Resource):
     
     def get(self):
-        qua=Product.get_total_products(self)
-        for a in qua:
-            print(a)
+        # qua=Product.get_total_products(self)
+        # for a in qua:
+        #     print(a)
         # m = a[0]
         # print(m)
 
@@ -30,13 +30,9 @@ class Products(Resource):
     @expects_json(products_schema)
     def post(self):
 
-        logged_in = get_jwt_identity()
-        print(logged_in)
-
         claims = get_jwt_claims()
         if claims['role'] != 'Admin':
-             message = {"message":"Must be logged in as Admin"}
-
+            return {"message":"Must be logged in as Admin"},403
 
 
         data = request.get_json()
@@ -89,21 +85,25 @@ class DeleteProduct(Resource):
     
     @jwt_required
     def delete(self,product_id):
+
         claims = get_jwt_claims()
         if claims['role'] != 'Admin':
-            return {"message":"Must be logged in as Admin"}
+            return {"message":"Must be logged in as Admin"},403
 
-        # db_products =Product.get_product(self)
-        Product.delete_product(product_id)
+        delete_product = Product.delete_product(product_id)
+        if not delete_product:
+            return {"message": "Product Does not exist"}
         return {"message":"Deleted successfully"}
 
 class ProductsUpdate(Resource):
     @jwt_required
     @expects_json(products_schema)
     def put(self,product_id):
+
         claims = get_jwt_claims()
         if claims['role'] != 'Admin':
-            return {"message":"Must be logged in as Admin"}
+            return {"message":"Must be logged in as Admin"},403
+
 
         data = request.get_json()
         # prod_id = data["product_id"]

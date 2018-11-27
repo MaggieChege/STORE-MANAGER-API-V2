@@ -109,8 +109,6 @@ class UserLogin(Resource):
                 return {'message': 'Wrong credentials'},400
 
 class Logout(Resource):
-
-    # @jwt_required
     @jwt_required
     def delete(self):
         # blacklist = set()
