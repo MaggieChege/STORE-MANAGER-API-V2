@@ -29,7 +29,7 @@ class Product():
         # con=Database_Connection()
         # cur= con.cursor()
         self.cur.execute(query)
-        db_products= cur.fetchall()
+        db_products= self.cur.fetchall()
         if db_products:
             prods = []
             for items in db_products:
@@ -44,27 +44,27 @@ class Product():
             return prods
 
     def delete_product(product_id):
-        con=Database_Connection()
-        cur= con.cursor()
+        # con=Database_Connection()
+        # cur= con.cursor()
         query = "DELETE FROM products where product_id = %s;"
-        update =cur.execute(query, (str(product_id),))
+        self.cur.execute(query, (str(product_id),))
         con.commit()
         return query
 
     def update(self, product_id):
         query="UPDATE products SET product_name=%s,category=%s,price=%s,quantity=%s where product_id = %s" 
-        con=Database_Connection()
-        con.cursor()
-        cur= con.cursor()
-        update =cur.execute(query, (self.product_name, self.category, self.price, self.quantity, product_id))
+        # con=Database_Connection()
+        # con.cursor()
+        # cur= con.cursor()
+        update =self.cur.execute(query, (self.product_name, self.category, self.price, self.quantity, product_id))
         con.commit()
         return {"message":"Product Successfully updated","Product":update},
     def get_product_by_id(product_id):
-        con=Database_Connection()
-        cur= con.cursor()
-        cur.execute("SELECT * FROM products WHERE product_id =%s", (product_id,))
+        # con=Database_Connection()
+        # cur= con.cursor()
+        self.cur.execute("SELECT * FROM products WHERE product_id =%s", (product_id,))
         print("iddddddddddd",product_id)
-        product = cur.fetchone()
+        product =self.cur.fetchone()
         return product
        
 
@@ -82,17 +82,17 @@ class Product():
 
             
     def get_product_name(product_name):
-        con=Database_Connection()
-        cur= con.cursor()
-        cur.execute("SELECT * FROM products WHERE product_name = %s", (product_name,))
+        # con=Database_Connection()
+        # cur= con.cursor()
+        self.cur.execute("SELECT * FROM products WHERE product_name = %s", (product_name,))
         productname = cur.fetchone()
         return productname
        
     def get_total_products(quantity):
-        con=Database_Connection()
-        cur= con.cursor()
-        cur.execute("SELECT quantity FROM products")
-        quantity = cur.fetchall()
+        # con=Database_Connection()
+        # cur= con.cursor()
+        self.cur.execute("SELECT quantity FROM products")
+        quantity = self.cur.fetchall()
         prods = []
         if quantity:
             for items in quantity:
