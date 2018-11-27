@@ -20,6 +20,7 @@ class Products(Resource):
         # n =sum(a)
         # print(n)
         dd =Product.get_product(self)
+        print(dd)
 
         if not dd:
             return make_response(jsonify({"message":"No Products.products"}),404)
