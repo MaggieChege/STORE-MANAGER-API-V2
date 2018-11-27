@@ -13,6 +13,8 @@ class Product():
         self.category=category
         self.price=price
         self.quantity=quantity
+        self.con=Database_Connection()
+        self.cur=self.con.cursor()
 
     def create_product(self):
         try:
@@ -23,10 +25,10 @@ class Product():
             print(e)
             return {"message": "Could not create a product"}
     def get_product(self):
-        query="SELECT * FROM products"
-        con=Database_Connection()
-        cur= con.cursor()
-        cur.execute(query)
+        # query="SELECT * FROM products"
+        # con=Database_Connection()
+        # cur= con.cursor()
+        self.cur.execute(query)
         db_products= cur.fetchall()
         if db_products:
             prods = []
