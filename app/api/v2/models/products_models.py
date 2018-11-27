@@ -93,10 +93,11 @@ class Product():
         cur= con.cursor()
         cur.execute("SELECT quantity FROM products")
         quantity = cur.fetchall()
+        prods = []
         if quantity:
-            prods = []
             for items in quantity:
                 item ={items[0]}
-            prods.append(item)
-            print(type(prods))
+        prods.append(item)
+        print(type(prods))
+
         return prods
