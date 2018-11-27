@@ -98,6 +98,6 @@ class Product():
             for items in quantity:
                 item ={
                 items[0]}
-                prods.append(item)
+            prods.append(item)
         print(type(prods))
         return prods
