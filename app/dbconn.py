@@ -16,8 +16,7 @@ def Database_Connection():
   #                   host="localhost", user="postgres", dbname="store_test", password="root")
 		# 	return connection
 		# else:
-		con = psycopg2.connect(app_config[environment].DATABASE_URL)
-		cur =con.cursor()
+		con = psycopg2.connect(app_config[environment].DATABASE_URL,sslmode='require')
 		return con
 		# return conn
 
