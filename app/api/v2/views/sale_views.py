@@ -13,6 +13,9 @@ from app.__init__ import *
 
 
 class Sales(Resource):
+    # def __init__(self):
+    #     self.con=Database_Connection()
+    #     self.cur=self.con.cursor()
     def get(self):
         sales = Sale.get_sales(self)
         if not sales:

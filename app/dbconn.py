@@ -11,15 +11,10 @@ from app.queries import queries,drop_queries
 
 def Database_Connection():
 	try:
-		# if 'pytest' in modules:
-		# 	connection = psycopg2.connect(
-  #                   host="localhost", user="postgres", dbname="store_test", password="root")
-		# 	return connection
-		# else:
+
 		DATABASE_URL = os.environ['DATABASE_URL']
 		con = psycopg2.connect(DATABASE_URL,sslmode='require')
 		return con
-		# return conn
 
 	except(Exception, psycopg2.DatabaseError) as error:
 		print("Failed to connect", error)

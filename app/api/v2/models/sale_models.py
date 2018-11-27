@@ -1,4 +1,5 @@
 from flask import make_response, jsonify
+import psycopg2
 from passlib.hash import pbkdf2_sha256 as sha256
 from app.dbconn import Database_Connection
 
@@ -31,7 +32,7 @@ class Sale():
     def get_sales(self):
         query="SELECT * FROM sales"
         # con=Database_Connection()
-        # cur= con.cursor()
+        # cur=con.cursor()
         self.cur.execute(query)
         db_sales= cur.fetchall()
         if db_sales:
