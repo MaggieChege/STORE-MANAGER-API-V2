@@ -88,18 +88,18 @@ class Product():
         productname = cur.fetchone()
         return productname
        
-    def get_total_products(quantity):
-        # con=Database_Connection()
-        # cur= con.cursor()
-        self.cur.execute("SELECT quantity FROM products")
-        quantity = self.cur.fetchall()
-        prods = []
-        if quantity:
-            for items in quantity:
-                item ={
-                items[0]
-                }
-                prods.append(item)
-        # print(type(prods))
+    # def get_total_products(quantity):
+    #     # con=Database_Connection()
+    #     # cur= con.cursor()
+    #     self.cur.execute("SELECT quantity FROM products")
+    #     quantity = self.cur.fetchall()
+    #     prods = []
+    #     if quantity:
+    #         for items in quantity:
+    #             item ={
+    #             items[0]
+    #             }
+    #             prods.append(item)
+    #     # print(type(prods))
 
-        return prods
+    #     return prods

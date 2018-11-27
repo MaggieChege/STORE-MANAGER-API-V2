@@ -10,9 +10,9 @@ from flask_expects_json import expects_json
 class Products(Resource):
     
     def get(self):
-        qua=Product.get_total_products(self)
-        for a in qua:
-            print(a)
+        # qua=Product.get_total_products(self)
+        # for a in qua:
+        #     print(a)
         # m = a[0]
         # print(m)
 
