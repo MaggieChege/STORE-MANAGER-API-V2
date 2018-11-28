@@ -34,11 +34,11 @@ def create_app(config_name):
     api.add_resource(UserLogin,"/users/login")
     api.add_resource(UserRegistration,"/auth/user")
     api.add_resource(Sales,"/sales")
+    api.add_resource(Logout,'/users/logout')
     # api.add_resource(Deletesale,"/sales/<int:sale_id>")
     api.add_resource(GetSaleId,"/sales/<int:product_id>")
     api.add_resource(DeleteProduct,"/products/<int:product_id>")
     api.add_resource(ProductsUpdate,"/products/<int:product_id>")
-    api.add_resource(Logout,'/users/logout')
     api.add_resource(AllUsers,"/users")
 
     jwt = JWTManager(app)
@@ -53,9 +53,9 @@ def create_app(config_name):
     @jwt.token_in_blacklist_loader
     def check_blacklist(decrypted_token):
         '''check if token is in black list'''
-        token = decrypted_token['jti']
+        access_token = decrypted_token['jti']
         revoked_tokens = Users()
-        return revoked_tokens.check_blacklist(token)
+        return revoked_tokens.check_blacklist(access_token)
 
 
     @jwt.user_identity_loader
