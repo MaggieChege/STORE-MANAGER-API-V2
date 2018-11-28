@@ -17,7 +17,7 @@ def Database_Connection(url):
 		# return conn
 
 	except(Exception, psycopg2.DatabaseError) as error:
-		print("Failed to connect", error)
+		print("Failed to connect!!!", error)
 
 def init_db():
 	con = Database_Connection(url)
@@ -28,7 +28,7 @@ def create_tables():
 		cur= con.cursor()
 		for tables in queries:
 			cur.execute(tables)
-		cur.close()
+		# cur.close()
 		con.commit()
 		print("Tables Created")
 	except(Exception,psycopg2.DatabaseError) as error:

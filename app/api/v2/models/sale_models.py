@@ -14,8 +14,8 @@ class Sale():
         self.attendant=attendant
         self.total_sale=total_sale
         self.date_created = date_created
-        self.db = init_db()
-        self.cur = self.db.cursor()
+        self.dbconn = init_db()
+        self.cur = self.dbconn.cursor()
  
     def create_sale(self):
         sale={"product_id":self.product_id,"quantity":self.quantity,"remaining_quantity":self.remaining_quantity,"price":self.price,"attendant":self.attendant,"total_sale":self.total_sale,"date_created":self.date_created}
