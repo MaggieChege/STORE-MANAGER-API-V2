@@ -34,7 +34,7 @@ class Sale():
         # con=Database_Connection()
         # cur= con.cursor()
         self.cur.execute(query)
-        db_sales= cur.fetchall()
+        db_sales= self.cur.fetchall()
         if db_sales:
             sales = []
             for items in db_sales:
