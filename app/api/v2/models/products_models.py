@@ -13,8 +13,6 @@ class Product():
         self.category=category
         self.price=price
         self.quantity=quantity
-        self.con=Database_Connection()
-        self.cur=self.con.cursor()
 
     def create_product(self):
         try:
@@ -25,11 +23,11 @@ class Product():
             print(e)
             return {"message": "Could not create a product"}
     def get_product(self):
-        # query="SELECT * FROM products"
-        # con=Database_Connection()
-        # cur= con.cursor()
-        self.cur.execute(query)
-        db_products= self.cur.fetchall()
+        query="SELECT * FROM products"
+        con=Database_Connection()
+        cur= con.cursor()
+        cur.execute(query)
+        db_products= cur.fetchall()
         if db_products:
             prods = []
             for items in db_products:
@@ -44,27 +42,27 @@ class Product():
             return prods
 
     def delete_product(product_id):
-        # con=Database_Connection()
-        # cur= con.cursor()
+        con=Database_Connection()
+        cur= con.cursor()
         query = "DELETE FROM products where product_id = %s;"
-        self.cur.execute(query, (str(product_id),))
+        update =cur.execute(query, (str(product_id),))
         con.commit()
         return query
 
     def update(self, product_id):
         query="UPDATE products SET product_name=%s,category=%s,price=%s,quantity=%s where product_id = %s" 
-        # con=Database_Connection()
-        # con.cursor()
-        # cur= con.cursor()
-        update =self.cur.execute(query, (self.product_name, self.category, self.price, self.quantity, product_id))
+        con=Database_Connection()
+        con.cursor()
+        cur= con.cursor()
+        update =cur.execute(query, (self.product_name, self.category, self.price, self.quantity, product_id))
         con.commit()
         return {"message":"Product Successfully updated","Product":update},
     def get_product_by_id(product_id):
-        # con=Database_Connection()
-        # cur= con.cursor()
-        self.cur.execute("SELECT * FROM products WHERE product_id =%s", (product_id,))
+        con=Database_Connection()
+        cur= con.cursor()
+        cur.execute("SELECT * FROM products WHERE product_id =%s", (product_id,))
         print("iddddddddddd",product_id)
-        product =self.cur.fetchone()
+        product = cur.fetchone()
         return product
        
 
@@ -82,24 +80,22 @@ class Product():
 
             
     def get_product_name(product_name):
-        # con=Database_Connection()
-        # cur= con.cursor()
-        self.cur.execute("SELECT * FROM products WHERE product_name = %s", (product_name,))
+        con=Database_Connection()
+        cur= con.cursor()
+        cur.execute("SELECT * FROM products WHERE product_name = %s", (product_name,))
         productname = cur.fetchone()
         return productname
        
     # def get_total_products(quantity):
-    #     # con=Database_Connection()
-    #     # cur= con.cursor()
-    #     self.cur.execute("SELECT quantity FROM products")
-    #     quantity = self.cur.fetchall()
-    #     prods = []
+    #     con=Database_Connection()
+    #     cur= con.cursor()
+    #     cur.execute("SELECT quantity FROM products")
+    #     quantity = cur.fetchall()
     #     if quantity:
+    #         prods = []
     #         for items in quantity:
     #             item ={
-    #             items[0]
-    #             }
+    #             items[0]}
     #             prods.append(item)
-    #     # print(type(prods))
-
+    #     print(type(prods))
     #     return prods

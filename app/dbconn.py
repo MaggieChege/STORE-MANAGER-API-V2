@@ -5,16 +5,21 @@ from instance.config import app_config
 from app.queries import queries,drop_queries
 
 
-# environment = os.environ['ENVIRONMENT']
+environment = os.environ['ENVIRONMENT']
 
-# url = os.getenv('DATABASE_URL')
+url = os.getenv('DATABASE_URL')
 
 def Database_Connection():
 	try:
-
-		DATABASE_URL = os.environ['DATABASE_URL']
-		con = psycopg2.connect(DATABASE_URL,sslmode='require')
+		# if 'pytest' in modules:
+		# 	connection = psycopg2.connect(
+  #                   host="localhost", user="postgres", dbname="store_test", password="root")
+		# 	return connection
+		# else:
+		con = psycopg2.connect(app_config[environment].DATABASE_URL)
+		cur =con.cursor()
 		return con
+		# return conn
 
 	except(Exception, psycopg2.DatabaseError) as error:
 		print("Failed to connect", error)

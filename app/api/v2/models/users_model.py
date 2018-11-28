@@ -8,7 +8,7 @@ from flask_jwt_extended import (
 import psycopg2
 # from app.api.v2.views.users_views import User
 
-class Users:
+class Users():
     def __init__(self,username=None,email=None,password=None,role=None):
         self.username=username
         self.email=email

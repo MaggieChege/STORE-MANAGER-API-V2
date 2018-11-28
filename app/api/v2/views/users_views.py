@@ -109,11 +109,10 @@ class UserLogin(Resource):
                 return {'message': 'Wrong credentials'},400
 
 class Logout(Resource):
-
-    # @jwt_required
     @jwt_required
-    def delete(self):
+    def post(self):
         # blacklist = set()
-        jti = get_raw_jwt()['jti']
-        add_to_blacklist(jti)
-        return {"message":"Successfully Logged out"},200
+        users = Users()
+        access_token = get_raw_jwt()['jti']
+        users.add_to_blacklist(access_token)
+        return {"message":"Successfully Logged out"},201

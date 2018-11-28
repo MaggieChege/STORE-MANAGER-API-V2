@@ -20,6 +20,7 @@ class Products(Resource):
         # n =sum(a)
         # print(n)
         dd =Product.get_product(self)
+        print(dd)
 
         if not dd:
             return make_response(jsonify({"message":"No Products.products"}),404)
@@ -30,13 +31,9 @@ class Products(Resource):
     @expects_json(products_schema)
     def post(self):
 
-        logged_in = get_jwt_identity()
-        print(logged_in)
-
         claims = get_jwt_claims()
         if claims['role'] != 'Admin':
-             message = {"message":"Must be logged in as Admin"}
-
+            return {"message":"Must be logged in as Admin"},403
 
 
         data = request.get_json()
@@ -46,7 +43,7 @@ class Products(Resource):
         quantity = data['quantity']
         
         if not product_name or not category or not price or not quantity:
-            return ( make_response(jsonify({
+            return( make_response(jsonify({
                 "message": "All fields are required"
                 }),400))
 
@@ -57,7 +54,8 @@ class Products(Resource):
         if not price or price == "":
            return{"message":"Price is required"}
         if not quantity or quantity == "":
-            return{"message":"Quantity is required"}
+           return{"message":"Quantity is required"}
+            
 
 
 
@@ -88,21 +86,25 @@ class DeleteProduct(Resource):
     
     @jwt_required
     def delete(self,product_id):
+
         claims = get_jwt_claims()
         if claims['role'] != 'Admin':
-            return {"message":"Must be logged in as Admin"}
+            return {"message":"Must be logged in as Admin"},403
 
-        # db_products =Product.get_product(self)
-        Product.delete_product(product_id)
+        delete_product = Product.delete_product(product_id)
+        if not delete_product:
+            return {"message": "Product Does not exist"}
         return {"message":"Deleted successfully"}
 
 class ProductsUpdate(Resource):
     @jwt_required
     @expects_json(products_schema)
     def put(self,product_id):
+
         claims = get_jwt_claims()
         if claims['role'] != 'Admin':
-            return {"message":"Must be logged in as Admin"}
+            return {"message":"Must be logged in as Admin"},403
+
 
         data = request.get_json()
         # prod_id = data["product_id"]

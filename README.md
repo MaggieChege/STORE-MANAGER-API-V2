@@ -1,6 +1,9 @@
 
-[![Build Status](https://travis-ci.org/MaggieChege/STORE-MANAGER-API-V2.svg?branch=develop)](https://travis-ci.org/MaggieChege/STORE-MANAGER-API-V2)
+[![Build Status](https://travis-ci.org/MaggieChege/STORE-MANAGER-API-V2.svg?branch=develop)](https://travis-ci.org/MaggieChege/STORE-MANAGER-API-V2)           [![Maintainability](https://api.codeclimate.com/v1/badges/643079f5b2d4cfce9b20/maintainability)](https://codeclimate.com/github/MaggieChege/STORE-MANAGER-API-V2/maintainability)
 [![Coverage Status](https://coveralls.io/repos/github/MaggieChege/STORE-MANAGER-API-V2/badge.svg?branch=develop)](https://coveralls.io/github/MaggieChege/STORE-MANAGER-API-V2?branch=develop)
+
+
+
 
 
 # STORE-MANAGER-API-V2
